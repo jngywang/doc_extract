@@ -50,20 +50,23 @@ class EdgarRAGPipeline:
         self.logger.info("loading EDGAR dataset...")
         try:
             # dataset = datasets.load_dataset("eloukas/edgar-corpus", "year_2018", split="test")
+
             self.dataset = load_dataset(
                 "json",
                 data_files={
                     "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
                 }
             )
+
             # ds = load_dataset(
             #     "json",
             #     data_files={
             #         "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
             #     }
             # )
-            # code = '817720'
+            # code = '1597892'
             # self.dataset = ds.filter(lambda x: x['cik'] == code)
+
             self.logger.info(self.dataset["test"]["filename"])
             return True
         except Exception as e:
@@ -211,13 +214,15 @@ class EdgarRAGPipeline:
                         - "net revenue" or "net revenues" 
                         - "total net sales"
                         - "revenues"
+                        - "revenue"
                         - "net sales"
                         - "total sales"
+                        - "Operation revenue"
 
-                        Extract the numerical value (with units like millions, thousands, etc.) associated with these terms.
-                        If multiple values are found, report all.
-                        If no revenue terms are found, respond with "No revenue information found".
-                        If only revenue related information found, but no exact number found, respond with "No exact revenue number found".
+                        Extract the numerical value ( just number or with units like millions, thousands, etc.) associated with these terms.
+                        If multiple values are found, report all with brief introduction.
+                        If no related terms are found, respond with "No revenue information found".
+                        If only related information found, but no exact number found, respond with "No exact revenue number found".
                         """
                     },
                     {
@@ -235,7 +240,9 @@ class EdgarRAGPipeline:
             return f"API error: {str(e)}"
     
     def process_document(self, document: Dict) -> Dict[str, str]:
+
         filename = document.get('filename')
+        self.logger.info("="*80)
         self.logger.info(f"\nProcessing file: {filename}")
 
         self.logger.info("Step 1: chunk by section...")
@@ -325,9 +332,9 @@ def main():
     pipeline.logger.info("="*60)
     
     for filename, file_results in results.items():
-        self.logger.info(f"\nFile: {filename}")
+        pipeline.logger.info(f"\nFile: {filename}")
         for section_key, revenue_info in file_results.items():
-            self.logger.info(f"  {section_key}: {revenue_info}")
+            pipeline.logger.info(f"  {section_key}: {revenue_info}")
 
 if __name__ == "__main__":
     main()
