@@ -234,50 +234,10 @@ class EdgarRAGPipeline:
         self.logger.info(f"Chunks filtered by semantic: {len(selected_chunks)} (thresholding at: {similarity_threshold})")
         return selected_chunks
 
-    def extract_revenue_with_openai(self, text: str) -> str:
-        try:
-            # init openAI
-            client = openai.OpenAI(api_key=self.openai_api_key)
-            response = client.chat.completions.create(
-                model="gpt-5",
-                messages=[
-                  {
-                        "role": "system",
-                        "content": """You are a financial analyst specializing in SEC EDGAR filings from 1993-2020. 
-
-                        Look for these revenue-related terms and their associated numbers:
-                        - "total revenue" or "total revenues"
-                        - "net revenue" or "net revenues" 
-                        - "total net sales"
-                        - "revenues"
-                        - "revenue"
-                        - "net sales"
-                        - "total sales"
-                        - "Operation revenue"
-
-                        Extract the numerical value ( just number or with units like millions, thousands, etc.) associated with these terms.
-                        If multiple values are found, report all with brief introduction.
-                        If no related terms are found, respond with "No revenue information found".
-                        If only related information found, but no exact number found, respond with "No exact revenue number found".
-                        """
-                    },
-                    {
-                        "role": "user", 
-                        "content": f"Extract revenue information from this SEC filing text:\n\n{text[:2000]}"
-                    }
-                ],
-                max_completion_tokens=3000,
-                reasoning_effort="medium"
-            )
-            
-            return response.choices[0].message.content.strip()
-        
-        except Exception as e:
-            return f"API error: {str(e)}"
-
-    def process_partition(self, partition_iterator):
+    @staticmethod
+    def process_partition(api_key_broadcast, partition_iterator):
         import openai
-        client = openai.OpenAI(api_key=self.openai_api_key)
+        client = openai.OpenAI(api_key=api_key_broadcast.value)
         
         for row in partition_iterator:
             chunk_key = row.chunk_key
@@ -290,7 +250,7 @@ class EdgarRAGPipeline:
                     messages=[
                         {
                             "role": "system",
-                            "content": SYS_PROMPT_REVENUE
+                            "content": prompt.SYS_PROMPT_REVENUE
                         },
                         {
                             "role": "user", 
@@ -330,7 +290,11 @@ class EdgarRAGPipeline:
                 StructField("revenue_info", StringType(), True)
             ])          
  
-            result_df = df.rdd.mapPartitions(process_partition).toDF(output_schema)
+            api_key_broadcast = self.spark.sparkContext.broadcast(self.openai_api_key)
+            def partition_processor(partition_iterator):
+                return EdgarRAGPipeline.process_partition(api_key_broadcast, partition_iterator)
+
+            result_df = df.rdd.mapPartitions(partition_processor).toDF(output_schema)
             
             print("Reduce to collect results...")
             results_rows = result_df.select("chunk_key", "filename", "revenue_info").collect()
@@ -387,21 +351,6 @@ class EdgarRAGPipeline:
 
         results = self.pyspark_openai_extraction(semantically_filtered, filename)
 
-        # results = {}
-        # # processing by sections 
-        # for section_name, content in semantically_filtered.items():
-        #     if content:
-        #         self.logger.info(f"processing {section_name}... ") #with content ==> {content}")
-
-        #         revenue_info = self.extract_revenue_with_openai(content)
-        #         results[f"{filename}_{section_name}"] = revenue_info
-        #         self.logger.info(f"  {revenue_info}")
-
-        #         # concurrency control with API rate limit 
-        #         time.sleep(1)
-        #     else:
-        #         results[f"{filename}_{section_name}"] = "section not valid"        
-        
         return results
     
     def run_pipeline(self, n_files):
