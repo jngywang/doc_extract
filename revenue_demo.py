@@ -274,8 +274,8 @@ class EdgarRAGPipeline:
             return {filename: "No chunks found"}
         self.logger.info(f"Found {len(semantically_filtered)} chunks after step 3")
 
+        ### openai query and result collection
         results = {}
-
         # processing by sections 
         for section_name, content in semantically_filtered.items():
             if content:
@@ -288,7 +288,8 @@ class EdgarRAGPipeline:
                 # concurrency control with API rate limit 
                 time.sleep(1)
             else:
-                results[f"{filename}_{section_name}"] = "section not valid"        
+                results[f"{filename}_{section_name}"] = "section not valid"
+        ###
         
         return results
     
@@ -302,6 +303,7 @@ class EdgarRAGPipeline:
             self.logger.info("No data found in 2018")
             return {}
         
+
         all_results = {}
         
         for i, document in enumerate(test_data_2018[:n_files]):
