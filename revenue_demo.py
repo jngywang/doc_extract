@@ -16,6 +16,7 @@ from pyspark.sql.types import StringType, BooleanType, StructType, StructField
 import sys
 from datetime import datetime
 import logging
+import prompt
 
 class EdgarRAGPipeline:
     
@@ -36,36 +37,75 @@ class EdgarRAGPipeline:
         )
         logging.getLogger("httpx").setLevel(logging.WARNING)
         logging.getLogger("openai").setLevel(logging.WARNING)
+        logging.getLogger("sentence_transformers").setLevel(logging.WARNING)
         self.logger = logging.getLogger(__name__)
 
-        # init openAI 
-        self.client = openai.OpenAI(api_key=openai_api_key)
+        self.openai_api_key = openai_api_key
         self.dataset = None
 
         # init Sentence Transformer
         self.logger.info("loading Sentence Transformer...")
         self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
+
+        # init PySpark
+        self.spark = None
+        self.spark_available = False
+        self.max_concurrent = 4
+        self._init_pyspark(self.max_concurrent)
+
+
+    def _init_pyspark(self, max_concurrent):
+        try:
+            print("Init PySpark...")
+            
+            self.spark = SparkSession.builder \
+                .appName("EdgarRAGPipeline") \
+                .master("local[*]") \
+                .config("spark.driver.memory", "1g") \
+                .config("spark.executor.memory", "1g") \
+                .config("spark.executor.cores", "1") \
+                .config("spark.executor.instances", str(self.max_concurrent)) \
+                .config("spark.sql.adaptive.enabled", "true") \
+                .config("spark.sql.adaptive.coalescePartitions.enabled", "true") \
+                .config("spark.sql.adaptive.skewJoin.enabled", "true") \
+                .config("spark.serializer", "org.apache.spark.serializer.KryoSerializer") \
+                .config("spark.driver.maxResultSize", "512m") \
+                .config("spark.sql.execution.arrow.pyspark.enabled", "true") \
+                .config("spark.python.worker.reuse", "true") \
+                .getOrCreate()
+            
+            self.spark.sparkContext.setLogLevel("WARN")
+            test_df = self.spark.createDataFrame([("test", 1)], ["text", "number"])
+            test_count = test_df.count()
+            self.spark_available = True
+            print(f"PySpark init！")
+            print(f"  - Spark version: {self.spark.version}")
+            print(f"  - core available: {self.spark.sparkContext.defaultParallelism}")
+            print(f"  - df size: {test_count}")
+            
+        except Exception as e:
+            print(f"PySpark init failed: {e}")
     
     def load_edgar_data(self):
         self.logger.info("loading EDGAR dataset...")
         try:
             # dataset = datasets.load_dataset("eloukas/edgar-corpus", "year_2018", split="test")
 
-            self.dataset = load_dataset(
-                "json",
-                data_files={
-                    "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
-                }
-            )
-
-            # ds = load_dataset(
+            # self.dataset = load_dataset(
             #     "json",
             #     data_files={
             #         "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
             #     }
             # )
-            # code = '1597892'
-            # self.dataset = ds.filter(lambda x: x['cik'] == code)
+
+            ds = load_dataset(
+                "json",
+                data_files={
+                    "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
+                }
+            )
+            code = '1597892'
+            self.dataset = ds.filter(lambda x: x['cik'] == code)
 
             self.logger.info(self.dataset["test"]["filename"])
             return True
@@ -127,44 +167,38 @@ class EdgarRAGPipeline:
             ngram_range=(1, 2)  # 1-gram and 2-gram
         )
 
-        try:
-            tfidf_matrix = vectorizer.fit_transform(chunk_texts)
-            feature_names = vectorizer.get_feature_names_out()
+        tfidf_matrix = vectorizer.fit_transform(chunk_texts)
+        feature_names = vectorizer.get_feature_names_out()
 
-            # retrieving revenue related terms
-            revenue_keywords = ['revenue', 'revenues', 'total revenue', 'net revenue', 'sales', 'income']
-            revenue_indices = []
+        # retrieving revenue related terms
+        revenue_keywords = ['revenue', 'revenues', 'total revenue', 'net revenue', 'sales', 'income']
+        revenue_indices = []
 
-            for keyword in revenue_keywords:
-                if keyword in feature_names:
-                    revenue_indices.append(np.where(feature_names == keyword)[0][0])
+        for keyword in revenue_keywords:
+            if keyword in feature_names:
+                revenue_indices.append(np.where(feature_names == keyword)[0][0])
 
-            if not revenue_indices:
-                self.logger.info("Revenue related terms not found in TFIDF feature")
-                return token_filtered  # return result from step-1
+        if not revenue_indices:
+            self.logger.info("Revenue related terms not found in TFIDF feature")
+            return token_filtered  # return result from step-1
 
-            # tfidf score for each chunks 
-            revenue_scores = []
-            for i in range(tfidf_matrix.shape[0]):
-                score = 0
-                for idx in revenue_indices:
-                    score += tfidf_matrix[i, idx]
-                revenue_scores.append(score)
+        # tfidf score for each chunks 
+        revenue_scores = []
+        for i in range(tfidf_matrix.shape[0]):
+            score = 0
+            for idx in revenue_indices:
+                score += tfidf_matrix[i, idx]
+            revenue_scores.append(score)
 
-            # filter by score>0 
-            selected_chunks = {}
-            for i, (key, text) in enumerate(zip(chunk_keys, chunk_texts)):
-                if revenue_scores[i] > 0:
-                    selected_chunks[key] = text
-            self.logger.info(f"Chunks filtered by TFIDF: {len(selected_chunks)}")
+        # filter by score>0 
+        selected_chunks = {}
+        for i, (key, text) in enumerate(zip(chunk_keys, chunk_texts)):
+            if revenue_scores[i] > 0:
+                selected_chunks[key] = text
+        self.logger.info(f"Chunks filtered by TFIDF: {len(selected_chunks)}")
 
-            return selected_chunks
+        return selected_chunks
 
-        except Exception as e:
-            self.logger.info(f"Error in TFIDF filtering: {e}")
-
-            return token_filtered  # return result from step-1 
-    
     def semantic_filter_with_sentence_transformer(self, chunks: Dict[str, str], 
                                                  query: str = "total revenue of 2018") -> Dict[str, str]:
         self.logger.info(f"To filter by Sentence Transformer. Starting with {len(chunks)} chunks")
@@ -202,7 +236,9 @@ class EdgarRAGPipeline:
 
     def extract_revenue_with_openai(self, text: str) -> str:
         try:
-            response = self.client.chat.completions.create(
+            # init openAI
+            client = openai.OpenAI(api_key=self.openai_api_key)
+            response = client.chat.completions.create(
                 model="gpt-5",
                 messages=[
                   {
@@ -238,7 +274,82 @@ class EdgarRAGPipeline:
         
         except Exception as e:
             return f"API error: {str(e)}"
-    
+
+    def process_partition(self, partition_iterator):
+        import openai
+        client = openai.OpenAI(api_key=self.openai_api_key)
+        
+        for row in partition_iterator:
+            chunk_key = row.chunk_key
+            content = row.content
+            filename = row.filename
+            
+            try:
+                response = client.chat.completions.create(
+                    model="gpt-5",
+                    messages=[
+                        {
+                            "role": "system",
+                            "content": SYS_PROMPT_REVENUE
+                        },
+                        {
+                            "role": "user", 
+                            "content": f"Extract revenue information from this SEC filing text:\n\n{content[:4000]}"
+                        }
+                    ],
+                    max_completion_tokens=3000,
+                    reasoning_effort="medium"
+                )
+                
+                revenue_info = response.choices[0].message.content.strip()
+                
+            except Exception as e:
+                revenue_info = f"API error: {str(e)}"
+            
+            yield (chunk_key, filename, content, revenue_info)
+
+    def pyspark_openai_extraction(self, chunks_dict: Dict[str, str], filename: str) -> Dict[str, str]:
+        try:
+            chunks_list = [
+                (chunk_key, content, filename) 
+                for chunk_key, content in chunks_dict.items()
+            ]
+            
+            print(f"parallelized processing {len(chunks_list)} chunks")
+            schema = StructType([
+                StructField("chunk_key", StringType(), True),
+                StructField("content", StringType(), True),
+                StructField("filename", StringType(), True)
+            ])
+            df = self.spark.createDataFrame(chunks_list, schema).repartition(self.max_concurrent) 
+
+            output_schema = StructType([
+                StructField("chunk_key", StringType(), True),
+                StructField("filename", StringType(), True),
+                StructField("content", StringType(), True),
+                StructField("revenue_info", StringType(), True)
+            ])          
+ 
+            result_df = df.rdd.mapPartitions(process_partition).toDF(output_schema)
+            
+            print("Reduce to collect results...")
+            results_rows = result_df.select("chunk_key", "filename", "revenue_info").collect()
+            
+            final_results = {}
+            for row in results_rows:
+                full_key = f"{row.filename}_{row.chunk_key}"
+                revenue_info = row.revenue_info
+                final_results[full_key] = revenue_info
+                
+                print(f"Final results - {full_key}: {revenue_info}")
+            
+            print(f"PySpark processed {len(final_results)} chunks")
+            return final_results
+            
+        except Exception as e:
+            print(f"PySpark OpenAI API failed: {e}")
+
+ 
     def process_document(self, document: Dict) -> Dict[str, str]:
 
         filename = document.get('filename')
@@ -274,21 +385,22 @@ class EdgarRAGPipeline:
             return {filename: "No chunks found"}
         self.logger.info(f"Found {len(semantically_filtered)} chunks after step 3")
 
-        results = {}
+        results = self.pyspark_openai_extraction(semantically_filtered, filename)
 
-        # processing by sections 
-        for section_name, content in semantically_filtered.items():
-            if content:
-                self.logger.info(f"processing {section_name}... ") #with content ==> {content}")
+        # results = {}
+        # # processing by sections 
+        # for section_name, content in semantically_filtered.items():
+        #     if content:
+        #         self.logger.info(f"processing {section_name}... ") #with content ==> {content}")
 
-                revenue_info = self.extract_revenue_with_openai(content)
-                results[f"{filename}_{section_name}"] = revenue_info
-                self.logger.info(f"  {revenue_info}")
+        #         revenue_info = self.extract_revenue_with_openai(content)
+        #         results[f"{filename}_{section_name}"] = revenue_info
+        #         self.logger.info(f"  {revenue_info}")
 
-                # concurrency control with API rate limit 
-                time.sleep(1)
-            else:
-                results[f"{filename}_{section_name}"] = "section not valid"        
+        #         # concurrency control with API rate limit 
+        #         time.sleep(1)
+        #     else:
+        #         results[f"{filename}_{section_name}"] = "section not valid"        
         
         return results
     
@@ -319,7 +431,6 @@ class EdgarRAGPipeline:
 
 def main():
     API_KEY = os.getenv("OPEN_API_KEY")
- 
     if API_KEY == "your-openai-api-key-here":
         print("OpenAI API Key needed!")
         return
