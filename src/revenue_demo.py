@@ -91,21 +91,21 @@ class EdgarRAGPipeline:
     def load_edgar_data(self):
         self.logger.info("loading EDGAR dataset...")
         try:
-            # self.dataset = load_dataset(
-            #     "json",
-            #     data_files={
-            #         "test": f"/Users/jingyawang/Downloads/edgar/{self.year}/test/*.jsonl"
-            #     }
-            # )
-
-            ds = load_dataset(
+            self.dataset = load_dataset(
                 "json",
                 data_files={
-                    "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
+                    "test": f"/Users/jingyawang/Downloads/edgar/{self.year}/test/*.jsonl"
                 }
             )
-            code = '1597892'
-            self.dataset = ds.filter(lambda x: x['cik'] == code)
+
+            # ds = load_dataset(
+            #     "json",
+            #     data_files={
+            #         "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
+            #     }
+            # )
+            # code = '1597892'
+            # self.dataset = ds.filter(lambda x: x['cik'] == code)
 
             self.logger.info(self.dataset["test"]["filename"])
             return True
@@ -411,7 +411,7 @@ def main():
     year = str(args.year)
  
     pipeline = EdgarRAGPipeline(API_KEY, year)
-    results, values = pipeline.run_pipeline(n_files = 10)
+    results, values = pipeline.run_pipeline(n_files = 5)
     
     pipeline.logger.info("\n" + "="*60)
     pipeline.logger.info("FINAL ANALYSIS:")
@@ -427,7 +427,7 @@ def main():
     pipeline.logger.info("="*60)
     
     for filename, file_results in values.items():
-        pipeline.logger.info(f"\nFile: {filename} gets total revenue in year {year}: {file_results}.")
+        pipeline.logger.info(f"\nFile: {filename} gets total revenue in year {year}: {file_results}")
 
 if __name__ == "__main__":
     main()

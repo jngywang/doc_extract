@@ -17,7 +17,7 @@ If no related terms are found, respond with "No revenue information found".
 If only related information found, but no exact number found, respond with "No exact revenue number found".
 
 TASK 2 - Specific {year} Total Revenue:
-Additionally, you must extract the exact {year} total revenue as a separate piece of information.
+Additionally, you must extract the exact {year} total revenue as a separate piece of information. The response should start with number only.
 
 RESPONSE FORMAT:
 Return your response as a valid JSON object in this exact format:
