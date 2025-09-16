@@ -89,23 +89,21 @@ class EdgarRAGPipeline:
     def load_edgar_data(self):
         self.logger.info("loading EDGAR dataset...")
         try:
-            # dataset = datasets.load_dataset("eloukas/edgar-corpus", "year_2018", split="test")
+            self.dataset = load_dataset(
+                "json",
+                data_files={
+                    "test": "/Users/jingyawang/Downloads/edgar/*/test/*.jsonl"
+                }
+            )
 
-            # self.dataset = load_dataset(
+            # ds = load_dataset(
             #     "json",
             #     data_files={
             #         "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
             #     }
             # )
-
-            ds = load_dataset(
-                "json",
-                data_files={
-                    "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
-                }
-            )
-            code = '1597892'
-            self.dataset = ds.filter(lambda x: x['cik'] == code)
+            # code = '1597892'
+            # self.dataset = ds.filter(lambda x: x['cik'] == code)
 
             self.logger.info(self.dataset["test"]["filename"])
             return True
@@ -275,7 +273,7 @@ class EdgarRAGPipeline:
                 for chunk_key, content in chunks_dict.items()
             ]
             
-            print(f"parallelized processing {len(chunks_list)} chunks")
+            self.logger.info(f"parallelized processing {len(chunks_list)} chunks")
             schema = StructType([
                 StructField("chunk_key", StringType(), True),
                 StructField("content", StringType(), True),
@@ -296,7 +294,7 @@ class EdgarRAGPipeline:
 
             result_df = df.rdd.mapPartitions(partition_processor).toDF(output_schema)
             
-            print("Reduce to collect results...")
+            self.logger.info("Reduce to collect results...")
             results_rows = result_df.select("chunk_key", "filename", "revenue_info").collect()
             
             final_results = {}
@@ -305,13 +303,13 @@ class EdgarRAGPipeline:
                 revenue_info = row.revenue_info
                 final_results[full_key] = revenue_info
                 
-                print(f"Final results - {full_key}: {revenue_info}")
+                self.logger.info(f"Final results - {full_key}: {revenue_info}")
             
-            print(f"PySpark processed {len(final_results)} chunks")
+            self.logger.info(f"PySpark processed {len(final_results)} chunks")
             return final_results
             
         except Exception as e:
-            print(f"PySpark OpenAI API failed: {e}")
+            self.logger.info(f"PySpark OpenAI API failed: {e}")
 
  
     def process_document(self, document: Dict) -> Dict[str, str]:
