@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 import requests
 from typing import List, Dict, Any
 import openai
@@ -90,21 +91,21 @@ class EdgarRAGPipeline:
     def load_edgar_data(self):
         self.logger.info("loading EDGAR dataset...")
         try:
-            self.dataset = load_dataset(
-                "json",
-                data_files={
-                    "test": f"/Users/jingyawang/Downloads/edgar/{self.year}/test/*.jsonl"
-                }
-            )
-
-            # ds = load_dataset(
+            # self.dataset = load_dataset(
             #     "json",
             #     data_files={
-            #         "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
+            #         "test": f"/Users/jingyawang/Downloads/edgar/{self.year}/test/*.jsonl"
             #     }
             # )
-            # code = '1597892'
-            # self.dataset = ds.filter(lambda x: x['cik'] == code)
+
+            ds = load_dataset(
+                "json",
+                data_files={
+                    "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
+                }
+            )
+            code = '1597892'
+            self.dataset = ds.filter(lambda x: x['cik'] == code)
 
             self.logger.info(self.dataset["test"]["filename"])
             return True
@@ -234,7 +235,7 @@ class EdgarRAGPipeline:
         return selected_chunks
 
     @staticmethod
-    def process_partition(api_key_broadcast, partition_iterator):
+    def process_partition(api_key_broadcast, partition_iterator, year = '2018'):
         import openai
         client = openai.OpenAI(api_key=api_key_broadcast.value)
         
@@ -249,7 +250,7 @@ class EdgarRAGPipeline:
                     messages=[
                         {
                             "role": "system",
-                            "content": prompt.SYS_PROMPT_REVENUE
+                            "content": prompt.SYS_PROMPT_REVENUE.format(year=year)
                         },
                         {
                             "role": "user", 
@@ -260,12 +261,22 @@ class EdgarRAGPipeline:
                     reasoning_effort="medium"
                 )
                 
-                revenue_info = response.choices[0].message.content.strip()
+                full_response = response.choices[0].message.content.strip()
                 
+                # Parse JSON response
+                try:
+                    response_json = json.loads(full_response)
+                    revenue_info = response_json.get("revenue analysis", "No analysis found")
+                    revenue_target_year = response_json.get("total revenue", "Not found")
+                except json.JSONDecodeError:
+                    revenue_info = full_response
+                    revenue_target_year = "JSON parse error"
+
             except Exception as e:
                 revenue_info = f"API error: {str(e)}"
-            
-            yield (chunk_key, filename, content, revenue_info)
+                revenue_target_year = "API error"
+
+            yield (chunk_key, filename, content, revenue_info, revenue_target_year)
 
     def pyspark_openai_extraction(self, chunks_dict: Dict[str, str], filename: str) -> Dict[str, str]:
         try:
@@ -286,7 +297,8 @@ class EdgarRAGPipeline:
                 StructField("chunk_key", StringType(), True),
                 StructField("filename", StringType(), True),
                 StructField("content", StringType(), True),
-                StructField("revenue_info", StringType(), True)
+                StructField("revenue_info", StringType(), True),
+                StructField("total_revenue", StringType(), True)
             ])          
  
             api_key_broadcast = self.spark.sparkContext.broadcast(self.openai_api_key)
@@ -296,18 +308,21 @@ class EdgarRAGPipeline:
             result_df = df.rdd.mapPartitions(partition_processor).toDF(output_schema)
             
             self.logger.info("Reduce to collect results...")
-            results_rows = result_df.select("chunk_key", "filename", "revenue_info").collect()
+            results_rows = result_df.select("chunk_key", "filename", "revenue_info", "total_revenue").collect()
             
             final_results = {}
+            revenue_value = ""
             for row in results_rows:
                 full_key = f"{row.filename}_{row.chunk_key}"
                 revenue_info = row.revenue_info
                 final_results[full_key] = revenue_info
-                
                 self.logger.info(f"Final results - {full_key}: {revenue_info}")
-            
+                if row.total_revenue != "Not found":
+                    revenue_value = row.total_revenue
+           
+            self.logger.info(f"Final value - {revenue_value}") 
             self.logger.info(f"PySpark processed {len(final_results)} chunks")
-            return final_results
+            return final_results, revenue_value
             
         except Exception as e:
             self.logger.info(f"PySpark OpenAI API failed: {e}")
@@ -348,9 +363,9 @@ class EdgarRAGPipeline:
             return {filename: "No chunks found"}
         self.logger.info(f"Found {len(semantically_filtered)} chunks after step 3")
 
-        results = self.pyspark_openai_extraction(semantically_filtered, filename)
+        results, value = self.pyspark_openai_extraction(semantically_filtered, filename)
 
-        return results
+        return results, value
     
     def run_pipeline(self, n_files):
         self.logger.info("Starting EDGAR RAG Pipeline...")
@@ -363,37 +378,56 @@ class EdgarRAGPipeline:
             return {}
         
         all_results = {}
+        all_values = {}
         
         for i, document in enumerate(test_data_year[:n_files]):
             self.logger.info(f"\n=== Reading files {i+1}/{min(n_files, len(test_data_year))} ===")
             
-            results = self.process_document(document)
+            results, value = self.process_document(document)
             filename = document.get('filename', f'doc_{i}')
             all_results[filename] = results
+            all_values[filename] = value
             
             self.logger.info(f"\nRetrieval results for file {filename} :")
             for key, value in results.items():
                 self.logger.info(f"  {key}: {value}")
         
-        return all_results
+        return all_results, all_values
 
 def main():
     API_KEY = os.getenv("OPEN_API_KEY")
     if API_KEY == "your-openai-api-key-here":
         print("OpenAI API Key needed!")
         return
+  
+    parser = argparse.ArgumentParser(description='year of file')
+    parser.add_argument('year', type=int, help='years in 1900-2030')
+    parser.add_argument('--format', default='YYYY')
+    args = parser.parse_args()
     
-    pipeline = EdgarRAGPipeline(API_KEY)
-    results = pipeline.run_pipeline(n_files = 10)
+    if args.year < 1993 or args.year > 2020:
+        print("Files are in years 1993-2020")
+        return
+    year = str(args.year)
+ 
+    pipeline = EdgarRAGPipeline(API_KEY, year)
+    results, values = pipeline.run_pipeline(n_files = 10)
     
     pipeline.logger.info("\n" + "="*60)
-    pipeline.logger.info("FINAL RESULTS:")
+    pipeline.logger.info("FINAL ANALYSIS:")
     pipeline.logger.info("="*60)
     
     for filename, file_results in results.items():
         pipeline.logger.info(f"\nFile: {filename}")
         for section_key, revenue_info in file_results.items():
             pipeline.logger.info(f"  {section_key}: {revenue_info}")
+
+    pipeline.logger.info("\n" + "="*60)
+    pipeline.logger.info("FINAL VALUES:")
+    pipeline.logger.info("="*60)
+    
+    for filename, file_results in values.items():
+        pipeline.logger.info(f"\nFile: {filename} gets total revenue in year {year}: {file_results}.")
 
 if __name__ == "__main__":
     main()
