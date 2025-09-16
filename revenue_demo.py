@@ -93,14 +93,14 @@ class EdgarRAGPipeline:
             self.dataset = load_dataset(
                 "json",
                 data_files={
-                    "test": "/Users/jingyawang/Downloads/edgar/2018/test/*.jsonl"
+                    "test": f"/Users/jingyawang/Downloads/edgar/{self.year}/test/*.jsonl"
                 }
             )
 
             # ds = load_dataset(
             #     "json",
             #     data_files={
-            #         "test": "/Users/jingyawang/Downloads/edgar/2018/test.jsonl"
+            #         "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
             #     }
             # )
             # code = '1597892'
@@ -113,7 +113,7 @@ class EdgarRAGPipeline:
             return False
    
     # confirm year 
-    def get_test_data_year(self, year: str) -> List[Dict]:
+    def get_test_data_year(self) -> List[Dict]:
         if not self.dataset:
             self.logger.info("Dataset not found")
             return []
@@ -122,10 +122,10 @@ class EdgarRAGPipeline:
         
         data_year = []
         for item in test_data:
-            if year in str(item.get('filename', '')) or year in str(item.get('year', '')):
+            if self.year in str(item.get('filename', '')) or self.year in str(item.get('year', '')):
                 data_year.append(item)
         
-        self.logger.info(f"Found {len(data_year)} items in year {year}")
+        self.logger.info(f"Found {len(data_year)} items in year {self.year}")
         return data_year
     
     def chunk_by_sections(self, document: Dict) -> Dict[str, str]:
@@ -357,7 +357,7 @@ class EdgarRAGPipeline:
         
         if not self.load_edgar_data():
             return {}
-        test_data_year = self.get_test_data_year(self.year)
+        test_data_year = self.get_test_data_year()
         if not test_data_year:
             self.logger.info("No data found in {self.year}")
             return {}
