@@ -20,7 +20,7 @@ import prompt
 
 class EdgarRAGPipeline:
     
-    def __init__(self, openai_api_key: str, log_file_path: str = None):
+    def __init__(self, openai_api_key: str, year: str = '2018', log_file_path: str = None):
 
         # logging to file 
         if log_file_path is None:
@@ -42,6 +42,7 @@ class EdgarRAGPipeline:
 
         self.openai_api_key = openai_api_key
         self.dataset = None
+        self.year = year
 
         # init Sentence Transformer
         self.logger.info("loading Sentence Transformer...")
@@ -92,7 +93,7 @@ class EdgarRAGPipeline:
             self.dataset = load_dataset(
                 "json",
                 data_files={
-                    "test": "/Users/jingyawang/Downloads/edgar/*/test/*.jsonl"
+                    "test": "/Users/jingyawang/Downloads/edgar/2018/test/*.jsonl"
                 }
             )
 
@@ -112,20 +113,20 @@ class EdgarRAGPipeline:
             return False
    
     # confirm year 
-    def get_test_data_2018(self) -> List[Dict]:
+    def get_test_data_year(self, year: str) -> List[Dict]:
         if not self.dataset:
             self.logger.info("Dataset not found")
             return []
         
         test_data = self.dataset['test']
         
-        data_2018 = []
+        data_year = []
         for item in test_data:
-            if '2018' in str(item.get('filename', '')) or '2018' in str(item.get('year', '')):
-                data_2018.append(item)
+            if year in str(item.get('filename', '')) or year in str(item.get('year', '')):
+                data_year.append(item)
         
-        self.logger.info(f"Found {len(data_2018)} items in year 2018")
-        return data_2018
+        self.logger.info(f"Found {len(data_year)} items in year {year}")
+        return data_year
     
     def chunk_by_sections(self, document: Dict) -> Dict[str, str]:
         chunks = {}
@@ -356,15 +357,15 @@ class EdgarRAGPipeline:
         
         if not self.load_edgar_data():
             return {}
-        test_data_2018 = self.get_test_data_2018()
-        if not test_data_2018:
-            self.logger.info("No data found in 2018")
+        test_data_year = self.get_test_data_year(self.year)
+        if not test_data_year:
+            self.logger.info("No data found in {self.year}")
             return {}
         
         all_results = {}
         
-        for i, document in enumerate(test_data_2018[:n_files]):
-            self.logger.info(f"\n=== Reading files {i+1}/{min(n_files, len(test_data_2018))} ===")
+        for i, document in enumerate(test_data_year[:n_files]):
+            self.logger.info(f"\n=== Reading files {i+1}/{min(n_files, len(test_data_year))} ===")
             
             results = self.process_document(document)
             filename = document.get('filename', f'doc_{i}')
