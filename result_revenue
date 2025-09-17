@@ -1,12 +1,10 @@
 loading Sentence Transformer...
-Use pytorch device_name: mps
-Load pretrained SentenceTransformer: all-MiniLM-L6-v2
 Starting EDGAR RAG Pipeline...
 loading EDGAR dataset...
 Column(['1667313_2018.htm', '1328143_2018.htm', '10795_2018.htm', '1558465_2018.htm', '1167419_2018.htm'])
 Found 688 items in year 2018
 
-=== Reading files 1/10 ===
+=== Reading files 1/5 ===
 ================================================================================
 
 Processing file: 1667313_2018.htm
@@ -31,22 +29,18 @@ Similarity ranking result and samples:
      Preview: Direct cost of revenues. The decrease in direct cost of revenues in fiscal 2018 compared to fiscal 2...
 Chunks filtered by semantic: 2 (thresholding at: 0.5)
 Found 2 chunks after step 3
-processing section_1_line_9... 
-  Found revenue figures:
-
-- Revenues: $10.8 million (fiscal 2018)
-- Revenues: $10.0 million (fiscal 2017)
-processing section_7_line_46... 
-  No exact revenue number found
+parallelized processing 2 chunks
+Reduce to collect results...
+Final results - 1667313_2018.htm_section_7_line_46: No exact revenue number found
+Final results - 1667313_2018.htm_section_1_line_9: Found 'revenues' figures: Fiscal 2018 revenues: $10.8 million; Fiscal 2017 revenues: $10.0 million.
+Final value - 10.8 million
+PySpark processed 2 chunks
 
 Retrieval results for file 1667313_2018.htm :
-  1667313_2018.htm_section_1_line_9: Found revenue figures:
-
-- Revenues: $10.8 million (fiscal 2018)
-- Revenues: $10.0 million (fiscal 2017)
   1667313_2018.htm_section_7_line_46: No exact revenue number found
+  1667313_2018.htm_section_1_line_9: Found 'revenues' figures: Fiscal 2018 revenues: $10.8 million; Fiscal 2017 revenues: $10.0 million.
 
-=== Reading files 2/10 ===
+=== Reading files 2/5 ===
 ================================================================================
 
 Processing file: 1328143_2018.htm
@@ -77,28 +71,22 @@ Similarity ranking result and samples:
      Preview: License and grant revenue decreased by $0.6 million, or 99%, to $3,000 for the year ended December 3...
 Chunks filtered by semantic: 4 (thresholding at: 0.5)
 Found 4 chunks after step 3
-processing section_7_line_26... 
-  No exact revenue number found
-processing section_7_line_73... 
-  No revenue information found
-processing section_7_line_101... 
-  No revenue information found
-processing section_7_line_110... 
-  Found the following revenue figures:
-- License and grant revenue: $3,000 (year ended Dec 31, 2017)
-- License and grant revenue: $0.6 million (year ended Dec 31, 2016)
-- License and grant revenue decreased by: $0.6 million
+parallelized processing 4 chunks
+Reduce to collect results...
+Final results - 1328143_2018.htm_section_7_line_101: No revenue information found
+Final results - 1328143_2018.htm_section_7_line_26: No exact revenue number found
+Final results - 1328143_2018.htm_section_7_line_110: Revenue: $3,000 (2017); $0.6 million (2016); decrease of $0.6 million (99%).
+Final results - 1328143_2018.htm_section_7_line_73: No revenue information found
+Final value - 
+PySpark processed 4 chunks
 
 Retrieval results for file 1328143_2018.htm :
-  1328143_2018.htm_section_7_line_26: No exact revenue number found
-  1328143_2018.htm_section_7_line_73: No revenue information found
   1328143_2018.htm_section_7_line_101: No revenue information found
-  1328143_2018.htm_section_7_line_110: Found the following revenue figures:
-- License and grant revenue: $3,000 (year ended Dec 31, 2017)
-- License and grant revenue: $0.6 million (year ended Dec 31, 2016)
-- License and grant revenue decreased by: $0.6 million
+  1328143_2018.htm_section_7_line_26: No exact revenue number found
+  1328143_2018.htm_section_7_line_110: Revenue: $3,000 (2017); $0.6 million (2016); decrease of $0.6 million (99%).
+  1328143_2018.htm_section_7_line_73: No revenue information found
 
-=== Reading files 3/10 ===
+=== Reading files 3/5 ===
 ================================================================================
 
 Processing file: 10795_2018.htm
@@ -159,68 +147,42 @@ Similarity ranking result and samples:
      Preview: •Selling and administrative expense as a percentage of revenues in 2018 was lower compared with 2017...
 Chunks filtered by semantic: 14 (thresholding at: 0.5)
 Found 14 chunks after step 3
-processing section_7_line_43... 
-  Found the following revenue figure:
-- Revenues (Worldwide, 2018): $15.983 billion
-processing section_8_line_524... 
-  No revenue information found
-processing section_7_line_95... 
-  No exact revenue number found
-processing section_7_line_135... 
-  No revenue information found
-processing section_7_line_124... 
-  No exact revenue number found
-processing section_7_line_138... 
-  No revenue information found
-processing section_7_line_76... 
-  No revenue information found
-processing section_7_line_99... 
-  Found multiple revenue-related figures:
-
-- Emerging market revenues (2018): $2.53 billion
-- Emerging market revenues (2017): $1.95 billion
-- Emerging market revenues (2016): $1.9 billion
-- Foreign currency impact on emerging market revenues (2018): $19 million favorable
-- Foreign currency impact on emerging market revenues (2017): $29 million unfavorable
-- Emerging market revenues related to divested businesses (2016): approximately $105 million
-processing section_7_line_97... 
-  No exact revenue number found
-processing section_7_line_83... 
-  No exact revenue number found
-processing section_7_line_126... 
-  No exact revenue number found
-processing section_7_line_63... 
-  No revenue information found
-processing section_7_line_155... 
-  No revenue information found
-processing section_7_line_68... 
-  No exact revenue number found
+parallelized processing 14 chunks
+Reduce to collect results...
+Final results - 10795_2018.htm_section_7_line_124: No exact revenue number found
+Final results - 10795_2018.htm_section_7_line_76: No revenue information found
+Final results - 10795_2018.htm_section_7_line_83: No exact revenue number found
+Final results - 10795_2018.htm_section_7_line_126: No exact revenue number found
+Final results - 10795_2018.htm_section_7_line_43: Found revenue-related figure: Worldwide revenues (2018): $15.983 billion.
+Final results - 10795_2018.htm_section_7_line_95: No exact revenue number found
+Final results - 10795_2018.htm_section_7_line_135: No revenue information found
+Final results - 10795_2018.htm_section_7_line_97: No exact revenue number found
+Final results - 10795_2018.htm_section_7_line_63: No revenue information found
+Final results - 10795_2018.htm_section_8_line_524: No revenue information found
+Final results - 10795_2018.htm_section_7_line_155: No revenue information found
+Final results - 10795_2018.htm_section_7_line_138: No revenue information found
+Final results - 10795_2018.htm_section_7_line_99: Found revenue-related figures: Emerging market revenues were $2.53 billion (2018), $1.95 billion (2017), and $1.9 billion (2016); foreign currency translation impact on emerging market revenues: +$19 million (2018) and -$29 million (2017); emerging market revenues related to divested businesses in 2016: approximately $105 million.
+Final results - 10795_2018.htm_section_7_line_68: No exact revenue number found
+Final value - 15.983 billion
+PySpark processed 14 chunks
 
 Retrieval results for file 10795_2018.htm :
-  10795_2018.htm_section_7_line_43: Found the following revenue figure:
-- Revenues (Worldwide, 2018): $15.983 billion
-  10795_2018.htm_section_8_line_524: No revenue information found
-  10795_2018.htm_section_7_line_95: No exact revenue number found
-  10795_2018.htm_section_7_line_135: No revenue information found
   10795_2018.htm_section_7_line_124: No exact revenue number found
-  10795_2018.htm_section_7_line_138: No revenue information found
   10795_2018.htm_section_7_line_76: No revenue information found
-  10795_2018.htm_section_7_line_99: Found multiple revenue-related figures:
-
-- Emerging market revenues (2018): $2.53 billion
-- Emerging market revenues (2017): $1.95 billion
-- Emerging market revenues (2016): $1.9 billion
-- Foreign currency impact on emerging market revenues (2018): $19 million favorable
-- Foreign currency impact on emerging market revenues (2017): $29 million unfavorable
-- Emerging market revenues related to divested businesses (2016): approximately $105 million
-  10795_2018.htm_section_7_line_97: No exact revenue number found
   10795_2018.htm_section_7_line_83: No exact revenue number found
   10795_2018.htm_section_7_line_126: No exact revenue number found
+  10795_2018.htm_section_7_line_43: Found revenue-related figure: Worldwide revenues (2018): $15.983 billion.
+  10795_2018.htm_section_7_line_95: No exact revenue number found
+  10795_2018.htm_section_7_line_135: No revenue information found
+  10795_2018.htm_section_7_line_97: No exact revenue number found
   10795_2018.htm_section_7_line_63: No revenue information found
+  10795_2018.htm_section_8_line_524: No revenue information found
   10795_2018.htm_section_7_line_155: No revenue information found
+  10795_2018.htm_section_7_line_138: No revenue information found
+  10795_2018.htm_section_7_line_99: Found revenue-related figures: Emerging market revenues were $2.53 billion (2018), $1.95 billion (2017), and $1.9 billion (2016); foreign currency translation impact on emerging market revenues: +$19 million (2018) and -$29 million (2017); emerging market revenues related to divested businesses in 2016: approximately $105 million.
   10795_2018.htm_section_7_line_68: No exact revenue number found
 
-=== Reading files 4/10 ===
+=== Reading files 4/5 ===
 ================================================================================
 
 Processing file: 1558465_2018.htm
@@ -254,31 +216,24 @@ Similarity ranking result and samples:
      Preview: The following is a summary of customers who accounted for more than ten percent (10%) of the Company...
 Chunks filtered by semantic: 5 (thresholding at: 0.5)
 Found 5 chunks after step 3
-processing section_7_line_104... 
-  No revenue information found
-processing section_7_line_93... 
-  No revenue information found
-processing section_7_line_84... 
-  Multiple revenue-related values found:
-
-- Net sales (2018): $9,026,962
-- Net sales (2017): $9,163,356
-processing section_15_line_164... 
-  No exact revenue number found
-processing section_15_line_187... 
-  No exact revenue number found
+parallelized processing 5 chunks
+Reduce to collect results...
+Final results - 1558465_2018.htm_section_15_line_164: No exact revenue number found
+Final results - 1558465_2018.htm_section_7_line_104: No revenue information found
+Final results - 1558465_2018.htm_section_15_line_187: No exact revenue number found
+Final results - 1558465_2018.htm_section_7_line_93: No revenue information found
+Final results - 1558465_2018.htm_section_7_line_84: Found net sales: 2018 - 9,026,962; 2017 - 9,163,356.
+Final value - 9,026,962
+PySpark processed 5 chunks
 
 Retrieval results for file 1558465_2018.htm :
-  1558465_2018.htm_section_7_line_104: No revenue information found
-  1558465_2018.htm_section_7_line_93: No revenue information found
-  1558465_2018.htm_section_7_line_84: Multiple revenue-related values found:
-
-- Net sales (2018): $9,026,962
-- Net sales (2017): $9,163,356
   1558465_2018.htm_section_15_line_164: No exact revenue number found
+  1558465_2018.htm_section_7_line_104: No revenue information found
   1558465_2018.htm_section_15_line_187: No exact revenue number found
+  1558465_2018.htm_section_7_line_93: No revenue information found
+  1558465_2018.htm_section_7_line_84: Found net sales: 2018 - 9,026,962; 2017 - 9,163,356.
 
-=== Reading files 5/10 ===
+=== Reading files 5/5 ===
 ================================================================================
 
 Processing file: 1167419_2018.htm
@@ -309,750 +264,75 @@ Similarity ranking result and samples:
      Preview: For the year ended December 31, 2018, the Company recorded investment income of approximately $70,00...
 Chunks filtered by semantic: 4 (thresholding at: 0.5)
 Found 4 chunks after step 3
-processing section_7_line_24... 
-  Found multiple revenue figures:
-- Digital currency mining revenue: approximately $7,749,000 (2018) and $173,000 (2017)
-- Other revenue (license payments): approximately $97,000 in each period (2018 and 2017)
-processing section_7_line_26... 
-  No exact revenue number found
-processing section_7_line_28... 
-  No revenue information found
-processing section_7_line_38... 
-  No revenue information found
+parallelized processing 4 chunks
+Reduce to collect results...
+Final results - 1167419_2018.htm_section_7_line_28: No revenue information found
+Final results - 1167419_2018.htm_section_7_line_24: Found revenue components: digital currency mining revenue of approximately $7,749,000 (2018) and $173,000 (2017); other revenue (license payments) of approximately $97,000 in each period (2018 and 2017). Derived total revenue: approximately $7,846,000 (2018) and $270,000 (2017).
+Final results - 1167419_2018.htm_section_7_line_38: No revenue information found
+Final results - 1167419_2018.htm_section_7_line_26: No revenue information found
+Final value - 7,846,000
+PySpark processed 4 chunks
 
 Retrieval results for file 1167419_2018.htm :
-  1167419_2018.htm_section_7_line_24: Found multiple revenue figures:
-- Digital currency mining revenue: approximately $7,749,000 (2018) and $173,000 (2017)
-- Other revenue (license payments): approximately $97,000 in each period (2018 and 2017)
-  1167419_2018.htm_section_7_line_26: No exact revenue number found
   1167419_2018.htm_section_7_line_28: No revenue information found
+  1167419_2018.htm_section_7_line_24: Found revenue components: digital currency mining revenue of approximately $7,749,000 (2018) and $173,000 (2017); other revenue (license payments) of approximately $97,000 in each period (2018 and 2017). Derived total revenue: approximately $7,846,000 (2018) and $270,000 (2017).
   1167419_2018.htm_section_7_line_38: No revenue information found
-
-=== Reading files 6/10 ===
-================================================================================
-
-Processing file: 1746129_2018.htm
-Step 1: chunk by section...
-Generated 765 chunks
-Starting with 765 chunks
-
-Step 2: token, TFIDF filtering...
-Chunks filtered by token>3 : 454
-Chunks filtered by TFIDF: 81
-Found 81 chunks after step 2
-
-Step 3: Sentence Transformer filtering...
-To filter by Sentence Transformer. Starting with 81 chunks
-Query: 'total revenue of 2018'
-Similarity ranking result and samples:
-  1. section_8_line_188
-     Similarity score: 0.5529
-     Preview: The (benefit)/provision for income taxes for the year ended December 31, 2018 consists of the follow...
-  2. section_7_line_77
-     Similarity score: 0.5243
-     Preview: Noninterest income for the year ended December 31, 2018 was $1.3 million compared to $1.4 million fo...
-  3. section_7_line_27
-     Similarity score: 0.5106
-     Preview: For the year ended December 31, 2018, we reported pre-tax net income of $25.8 million compared to pr...
-Chunks filtered by semantic: 3 (thresholding at: 0.5)
-Found 3 chunks after step 3
-processing section_8_line_188... 
-  No revenue information found
-processing section_7_line_77... 
-  No revenue information found
-processing section_7_line_27... 
-  No revenue information found
-
-Retrieval results for file 1746129_2018.htm :
-  1746129_2018.htm_section_8_line_188: No revenue information found
-  1746129_2018.htm_section_7_line_77: No revenue information found
-  1746129_2018.htm_section_7_line_27: No revenue information found
-
-=== Reading files 7/10 ===
-================================================================================
-
-Processing file: 886128_2018.htm
-Step 1: chunk by section...
-Generated 1240 chunks
-Starting with 1240 chunks
-
-Step 2: token, TFIDF filtering...
-Chunks filtered by token>3 : 756
-Chunks filtered by TFIDF: 130
-Found 130 chunks after step 2
-
-Step 3: Sentence Transformer filtering...
-To filter by Sentence Transformer. Starting with 130 chunks
-Query: 'total revenue of 2018'
-Similarity ranking result and samples:
-  1. section_7_line_13
-     Similarity score: 0.7243
-     Preview: Total revenues for the year ended October 31, 2018 decreased $6.2 million, or 7%, to $89.4 million f...
-  2. section_8_line_99
-     Similarity score: 0.6838
-     Preview: The Company recorded revenue of $2.1 million, $2.7 million and $6.2 million for the years ended Octo...
-  3. section_8_line_371
-     Similarity score: 0.6729
-     Preview: Revenues, by geographic location (based on the customer’s ordering location) for the years ended Oct...
-  4. section_7_line_60
-     Similarity score: 0.6714
-     Preview: Total revenues for the year ended October 31, 2017 decreased $12.6 million, or 12%, to $95.7 million...
-  5. section_7_line_73
-     Similarity score: 0.6569
-     Preview: Generation revenue and related costs for the years ended October 31, 2017 and 2016 were as follows:
-  6. section_7_line_12
-     Similarity score: 0.6482
-     Preview: Our revenues and cost of revenues for the years ended October 31, 2018 and 2017 were as follows:
-  7. section_7_line_16
-     Similarity score: 0.6281
-     Preview: Product revenues for the year ended October 31, 2018 included $49.4 million of power plant revenue a...
-  8. section_7_line_59
-     Similarity score: 0.6250
-     Preview: Our revenues and cost of revenues for the years ended October 31, 2017 and 2016 were as follows:
-  9. section_8_line_108
-     Similarity score: 0.6199
-     Preview: The percent of consolidated revenues from each customer for the years ended October 31, 2018, 2017 a...
-  10. section_7_line_15
-     Similarity score: 0.5681
-     Preview: Our product sales, cost of product sales and gross profit for the years ended October 31, 2018 and 2...
-  11. section_7_line_27
-     Similarity score: 0.5636
-     Preview: Revenues for the year ended October 31, 2018 from generation totaled $7.2 million, which is generall...
-  12. section_7_line_31
-     Similarity score: 0.5573
-     Preview: Advanced Technologies contract revenue for the year ended October 31, 2018 was $14.0 million, which ...
-  13. section_7_line_30
-     Similarity score: 0.5525
-     Preview: Advanced Technologies contracts revenue and related costs for the years ended October 31, 2018 and 2...
-  14. section_7_line_62
-     Similarity score: 0.5491
-     Preview: Our product sales, cost of product sales and gross profit for the years ended October 31, 2017 and 2...
-  15. section_7_line_18
-     Similarity score: 0.5471
-     Preview: Cost of product revenues increased $4.7 million for the year ended October 31, 2018 to $54.5 million...
-  16. section_7_line_77
-     Similarity score: 0.5465
-     Preview: Advanced Technologies contracts revenue and related costs for the years ended October 31, 2017 and 2...
-  17. section_7_line_74
-     Similarity score: 0.5429
-     Preview: Revenues for the year ended October 31, 2017 from generation totaled $7.2 million, compared to $1.3 ...
-  18. section_7_line_156
-     Similarity score: 0.5421
-     Preview: Net cash provided by operating activities during fiscal year 2018 was primarily the result of decrea...
-  19. section_7_line_22
-     Similarity score: 0.5390
-     Preview: Revenues for the year ended October 31, 2018 from service agreements and license fee and royalty agr...
-  20. section_8_line_107
-     Similarity score: 0.5373
-     Preview: We contract with a concentrated number of customers for the sale of our products, for service agreem...
-  21. section_8_line_372
-     Similarity score: 0.5308
-     Preview: Service agreement revenue which is included within Service agreements and license revenues on the co...
-  22. section_7_line_78
-     Similarity score: 0.5308
-     Preview: Advanced Technologies contracts revenue for the year ended October 31, 2017 was $18.3 million, repre...
-  23. section_1_line_31
-     Similarity score: 0.5084
-     Preview: expected operating results such as revenue growth and earnings,
-  24. section_7_line_24
-     Similarity score: 0.5061
-     Preview: Overall gross profit from service and license revenues was $0.7 million for the year ended October 3...
-Chunks filtered by semantic: 24 (thresholding at: 0.5)
-Found 24 chunks after step 3
-processing section_7_line_13... 
-  Found revenue-related values:
-- Total revenues: $89.4 million (year ended October 31, 2018)
-- Total revenues: $95.7 million (year ended October 31, 2017)
-- Total revenues decrease: $6.2 million
-processing section_8_line_99... 
-  Multiple revenue figures found:
-- revenue: $2.1 million (2018)
-- revenue: $2.7 million (2017)
-- revenue: $6.2 million (2016)
-processing section_8_line_371... 
-  No exact revenue number found
-processing section_7_line_60... 
-  Found revenue-related figures:
-
-- Total revenues (year ended Oct 31, 2017): $95.7 million
-- Total revenues (year ended Oct 31, 2016): $108.3 million
-- Total revenues decrease year-over-year: $12.6 million (12%)
-processing section_7_line_73... 
-  No exact revenue number found
-processing section_7_line_12... 
-  No exact revenue number found
-processing section_7_line_16... 
-  Multiple revenue figures found:
-
-- Revenue (power plant), year ended Oct 31, 2018: $49.4 million
-- Revenue (engineering and construction services), year ended Oct 31, 2018: $3.1 million
-- Revenue (power plant), year ended Oct 31, 2017: $41.0 million
-- Revenue (engineering and construction services), year ended Oct 31, 2017: $2.0 million
-processing section_7_line_59... 
-  No exact revenue number found
-processing section_8_line_108... 
-  No exact revenue number found
-processing section_7_line_15... 
-  No exact revenue number found
-processing section_7_line_27... 
-  Found the following revenue figure:
-- Revenues (from generation), year ended October 31, 2018: $7.2 million
-processing section_7_line_31... 
-  Found revenue amounts:
-- Advanced Technologies contract revenue (year ended Oct 31, 2018): $14.0 million
-- Revenue (year ended Oct 31, 2017): $18.3 million
-processing section_7_line_30... 
-  No exact revenue number found
-processing section_7_line_62... 
-  No revenue information found
-processing section_7_line_18... 
-  No exact revenue number found
-processing section_7_line_77... 
-  No exact revenue number found
-processing section_7_line_74... 
-  Found revenue-related amounts:
-
-- Revenues (from generation) — $7.2 million for the year ended October 31, 2017
-- Revenues (from generation) — $1.3 million for the prior year period
-processing section_7_line_156... 
-  Found revenue-related term with associated number:
-- Deferred revenue: $1.3 million
-processing section_7_line_22... 
-  Multiple revenue figures found:
-
-- Revenues (from service agreements and license fee and royalty agreements): $15.8 million (2018); $27.1 million (2017); decrease of $11.3 million.
-- Revenue (from license, royalty and material management fees): $2.2 million (2018); $2.7 million (2017).
-processing section_8_line_107... 
-  No exact revenue number found
-processing section_8_line_372... 
-  Found revenue figures:
-- Service agreement revenue: $13.5 million (2018); $24.4 million (2017); $26.6 million (2016)
-processing section_7_line_78... 
-  Found the following revenue figures:
-- Advanced Technologies contracts revenue (year ended Oct 31, 2017): $18.3 million
-- Advanced Technologies contracts revenue (year ended Oct 31, 2016): $12.9 million
-processing section_1_line_31... 
-  No exact revenue number found
-processing section_7_line_24... 
-  No exact revenue number found
-
-Retrieval results for file 886128_2018.htm :
-  886128_2018.htm_section_7_line_13: Found revenue-related values:
-- Total revenues: $89.4 million (year ended October 31, 2018)
-- Total revenues: $95.7 million (year ended October 31, 2017)
-- Total revenues decrease: $6.2 million
-  886128_2018.htm_section_8_line_99: Multiple revenue figures found:
-- revenue: $2.1 million (2018)
-- revenue: $2.7 million (2017)
-- revenue: $6.2 million (2016)
-  886128_2018.htm_section_8_line_371: No exact revenue number found
-  886128_2018.htm_section_7_line_60: Found revenue-related figures:
-
-- Total revenues (year ended Oct 31, 2017): $95.7 million
-- Total revenues (year ended Oct 31, 2016): $108.3 million
-- Total revenues decrease year-over-year: $12.6 million (12%)
-  886128_2018.htm_section_7_line_73: No exact revenue number found
-  886128_2018.htm_section_7_line_12: No exact revenue number found
-  886128_2018.htm_section_7_line_16: Multiple revenue figures found:
-
-- Revenue (power plant), year ended Oct 31, 2018: $49.4 million
-- Revenue (engineering and construction services), year ended Oct 31, 2018: $3.1 million
-- Revenue (power plant), year ended Oct 31, 2017: $41.0 million
-- Revenue (engineering and construction services), year ended Oct 31, 2017: $2.0 million
-  886128_2018.htm_section_7_line_59: No exact revenue number found
-  886128_2018.htm_section_8_line_108: No exact revenue number found
-  886128_2018.htm_section_7_line_15: No exact revenue number found
-  886128_2018.htm_section_7_line_27: Found the following revenue figure:
-- Revenues (from generation), year ended October 31, 2018: $7.2 million
-  886128_2018.htm_section_7_line_31: Found revenue amounts:
-- Advanced Technologies contract revenue (year ended Oct 31, 2018): $14.0 million
-- Revenue (year ended Oct 31, 2017): $18.3 million
-  886128_2018.htm_section_7_line_30: No exact revenue number found
-  886128_2018.htm_section_7_line_62: No revenue information found
-  886128_2018.htm_section_7_line_18: No exact revenue number found
-  886128_2018.htm_section_7_line_77: No exact revenue number found
-  886128_2018.htm_section_7_line_74: Found revenue-related amounts:
-
-- Revenues (from generation) — $7.2 million for the year ended October 31, 2017
-- Revenues (from generation) — $1.3 million for the prior year period
-  886128_2018.htm_section_7_line_156: Found revenue-related term with associated number:
-- Deferred revenue: $1.3 million
-  886128_2018.htm_section_7_line_22: Multiple revenue figures found:
-
-- Revenues (from service agreements and license fee and royalty agreements): $15.8 million (2018); $27.1 million (2017); decrease of $11.3 million.
-- Revenue (from license, royalty and material management fees): $2.2 million (2018); $2.7 million (2017).
-  886128_2018.htm_section_8_line_107: No exact revenue number found
-  886128_2018.htm_section_8_line_372: Found revenue figures:
-- Service agreement revenue: $13.5 million (2018); $24.4 million (2017); $26.6 million (2016)
-  886128_2018.htm_section_7_line_78: Found the following revenue figures:
-- Advanced Technologies contracts revenue (year ended Oct 31, 2017): $18.3 million
-- Advanced Technologies contracts revenue (year ended Oct 31, 2016): $12.9 million
-  886128_2018.htm_section_1_line_31: No exact revenue number found
-  886128_2018.htm_section_7_line_24: No exact revenue number found
-
-=== Reading files 8/10 ===
-================================================================================
-
-Processing file: 1681556_2018.htm
-Step 1: chunk by section...
-Generated 378 chunks
-Starting with 378 chunks
-
-Step 2: token, TFIDF filtering...
-Chunks filtered by token>3 : 240
-Chunks filtered by TFIDF: 38
-Found 38 chunks after step 2
-
-Step 3: Sentence Transformer filtering...
-To filter by Sentence Transformer. Starting with 38 chunks
-Query: 'total revenue of 2018'
-Similarity ranking result and samples:
-  1. section_7_line_20
-     Similarity score: 0.6666
-     Preview: Revenues for the year ended December 31, 2018 and 2017 were $8,762,332 and $8,407,088, respectively....
-  2. section_15_line_151
-     Similarity score: 0.6494
-     Preview: For the twelve months ended December 31, 2018 and 2017, the Company had $0 and $104,000 revenues fro...
-Chunks filtered by semantic: 2 (thresholding at: 0.5)
-Found 2 chunks after step 3
-processing section_7_line_20... 
-  Found multiple revenue figures:
-
-- Revenues: $8,762,332 (2018); $8,407,088 (2017)
-- Related party revenues: $0 (2018); $104,000 (2017)
-processing section_15_line_151... 
-  Found revenue-related term: "revenues"
-
-- $0 (revenues from related parties; twelve months ended Dec 31, 2018)
-- $104,000 (revenues from related parties; twelve months ended Dec 31, 2017)
-
-Retrieval results for file 1681556_2018.htm :
-  1681556_2018.htm_section_7_line_20: Found multiple revenue figures:
-
-- Revenues: $8,762,332 (2018); $8,407,088 (2017)
-- Related party revenues: $0 (2018); $104,000 (2017)
-  1681556_2018.htm_section_15_line_151: Found revenue-related term: "revenues"
-
-- $0 (revenues from related parties; twelve months ended Dec 31, 2018)
-- $104,000 (revenues from related parties; twelve months ended Dec 31, 2017)
-
-=== Reading files 9/10 ===
-================================================================================
-
-Processing file: 817720_2018.htm
-Step 1: chunk by section...
-Generated 935 chunks
-Starting with 935 chunks
-
-Step 2: token, TFIDF filtering...
-Chunks filtered by token>3 : 495
-Chunks filtered by TFIDF: 100
-Found 100 chunks after step 2
-
-Step 3: Sentence Transformer filtering...
-To filter by Sentence Transformer. Starting with 100 chunks
-Query: 'total revenue of 2018'
-Similarity ranking result and samples:
-  1. section_15_line_362
-     Similarity score: 0.7279
-     Preview: Major customers’ revenue as a percentage of total net revenue for fiscal 2018, 2017, and 2016 were a...
-  2. section_15_line_358
-     Similarity score: 0.7041
-     Preview: Net revenue from external customers for each group of similar products for fiscal 2018, 2017, and 20...
-  3. section_15_line_357
-     Similarity score: 0.6409
-     Preview: Net revenue within geographic areas based on our customers’ locations for fiscal 2018, 2017, and 201...
-  4. section_7_line_37
-     Similarity score: 0.6144
-     Preview: The following sets forth certain of our consolidated statements of operations data as a percentage o...
-  5. section_7_line_6
-     Similarity score: 0.5860
-     Preview: We recognize revenue from product sales when there is persuasive evidence that an arrangement exists...
-  6. section_7_line_42
-     Similarity score: 0.5803
-     Preview: Net revenue was $1,630.3 million for fiscal 2018 compared with $1,718.2 million for fiscal 2017, a d...
-  7. section_15_line_340
-     Similarity score: 0.5765
-     Preview: The provision for income taxes for fiscal 2018, 2017, and 2016 consisted of the following (in millio...
-  8. section_7_line_55
-     Similarity score: 0.5580
-     Preview: Interest and other income, net. Interest and other income, net was $2.3 million for fiscal 2018 comp...
-  9. section_7_line_63
-     Similarity score: 0.5439
-     Preview: Net revenue was $1,718.2 million for fiscal 2017 compared with $1,666.9 million for fiscal 2016, an ...
-  10. section_15_line_339
-     Similarity score: 0.5417
-     Preview: Income/(loss) before provision for income taxes for fiscal 2018, 2017, and 2016 consisted of the fol...
-  11. section_15_line_194
-     Similarity score: 0.5265
-     Preview: The computation of basic and diluted net income per share for fiscal 2018, 2017, and 2016 was as fol...
-  12. section_1_line_321
-     Similarity score: 0.5097
-     Preview: International sales constituted over 86% of our revenue for each of fiscal 2018, 2017, and 2016. App...
-  13. section_7_line_34
-     Similarity score: 0.5078
-     Preview: As a result of our recent acquisitions, we are presenting a new revenue line for revenue derived fro...
-  14. section_7_line_75
-     Similarity score: 0.5028
-     Preview: Interest and other income, net. Interest and other income, net was $2.6 million for fiscal 2017 comp...
-Chunks filtered by semantic: 14 (thresholding at: 0.5)
-Found 14 chunks after step 3
-processing section_15_line_362... 
-  No exact revenue number found
-processing section_15_line_358... 
-  No exact revenue number found
-processing section_15_line_357... 
-  No exact revenue number found
-processing section_7_line_37... 
-  No exact revenue number found
-processing section_7_line_6... 
-  Found the following revenue-related figures:
-
-- Net revenue: $947.5 million (fiscal 2014)
-- Net revenue: $1,630.3 million (fiscal 2018)
-
-- Net revenue mix (fiscal 2014):
-  - 27.2% of net revenue from the personal computer market
-  - 72.8% of net revenue from the mobile product applications market
-
-- Net revenue mix (fiscal 2018):
-  - 15.8% of net revenue from the personal computer market
-  - 62.6% of net revenue from the mobile product applications market
-  - 21.6% of net revenue from the IoT product applications market
-processing section_7_line_42... 
-  Found multiple net revenue figures:
-
-- Net revenue: $1,630.3 million (fiscal 2018)
-- Net revenue: $1,718.2 million (fiscal 2017)
-- Decrease in net revenue: $87.9 million
-
-Fiscal 2018 net revenue by market:
-- Mobile: $1,021.0 million
-- PC: $257.8 million
-- IoT: $351.5
-
-Changes in net revenue by application:
-- Mobile: -$385.0 million
-- IoT: +$268.5 million
-- PC: +$28.6 million
-processing section_15_line_340... 
-  No revenue information found
-processing section_7_line_55... 
-  No revenue information found
-processing section_7_line_63... 
-  Found multiple revenue figures:
-
-- Net revenue: $1,718.2 million (fiscal 2017)
-- Net revenue: $1,666.9 million (fiscal 2016)
-- Fiscal 2017 net revenue by market:
-  - Mobile product applications: $1,406.0 million (81.9% of net revenue)
-  - PC product applications: $229.2 million (13.3% of net revenue)
-  - IoT product applications: $83.0 million (4.8% of net revenue)
-- Change in net revenue (2017 vs 2016): +$51.3 million (+3.1%)
-- Change in net revenue by market:
-  - PC product applications: +$21.8 million (+10.5%)
-  - IoT product applications: +$21.7 million (+35.4%)
-  - Mobile product applications: +$7.8 million (+0.6%)
-- Decline in revenue from discrete display products: -16.5% (no dollar amount provided)
-processing section_15_line_339... 
-  No revenue information found
-processing section_15_line_194... 
-  No revenue information found
-processing section_1_line_321... 
-  No exact revenue number found
-processing section_7_line_34... 
-  No exact revenue number found
-processing section_7_line_75... 
-  No revenue information found
-
-Retrieval results for file 817720_2018.htm :
-  817720_2018.htm_section_15_line_362: No exact revenue number found
-  817720_2018.htm_section_15_line_358: No exact revenue number found
-  817720_2018.htm_section_15_line_357: No exact revenue number found
-  817720_2018.htm_section_7_line_37: No exact revenue number found
-  817720_2018.htm_section_7_line_6: Found the following revenue-related figures:
-
-- Net revenue: $947.5 million (fiscal 2014)
-- Net revenue: $1,630.3 million (fiscal 2018)
-
-- Net revenue mix (fiscal 2014):
-  - 27.2% of net revenue from the personal computer market
-  - 72.8% of net revenue from the mobile product applications market
-
-- Net revenue mix (fiscal 2018):
-  - 15.8% of net revenue from the personal computer market
-  - 62.6% of net revenue from the mobile product applications market
-  - 21.6% of net revenue from the IoT product applications market
-  817720_2018.htm_section_7_line_42: Found multiple net revenue figures:
-
-- Net revenue: $1,630.3 million (fiscal 2018)
-- Net revenue: $1,718.2 million (fiscal 2017)
-- Decrease in net revenue: $87.9 million
-
-Fiscal 2018 net revenue by market:
-- Mobile: $1,021.0 million
-- PC: $257.8 million
-- IoT: $351.5
-
-Changes in net revenue by application:
-- Mobile: -$385.0 million
-- IoT: +$268.5 million
-- PC: +$28.6 million
-  817720_2018.htm_section_15_line_340: No revenue information found
-  817720_2018.htm_section_7_line_55: No revenue information found
-  817720_2018.htm_section_7_line_63: Found multiple revenue figures:
-
-- Net revenue: $1,718.2 million (fiscal 2017)
-- Net revenue: $1,666.9 million (fiscal 2016)
-- Fiscal 2017 net revenue by market:
-  - Mobile product applications: $1,406.0 million (81.9% of net revenue)
-  - PC product applications: $229.2 million (13.3% of net revenue)
-  - IoT product applications: $83.0 million (4.8% of net revenue)
-- Change in net revenue (2017 vs 2016): +$51.3 million (+3.1%)
-- Change in net revenue by market:
-  - PC product applications: +$21.8 million (+10.5%)
-  - IoT product applications: +$21.7 million (+35.4%)
-  - Mobile product applications: +$7.8 million (+0.6%)
-- Decline in revenue from discrete display products: -16.5% (no dollar amount provided)
-  817720_2018.htm_section_15_line_339: No revenue information found
-  817720_2018.htm_section_15_line_194: No revenue information found
-  817720_2018.htm_section_1_line_321: No exact revenue number found
-  817720_2018.htm_section_7_line_34: No exact revenue number found
-  817720_2018.htm_section_7_line_75: No revenue information found
-
-=== Reading files 10/10 ===
-================================================================================
-
-Processing file: 1597892_2018.htm
-Step 1: chunk by section...
-Generated 630 chunks
-Starting with 630 chunks
-
-Step 2: token, TFIDF filtering...
-Chunks filtered by token>3 : 360
-Chunks filtered by TFIDF: 61
-Found 61 chunks after step 2
-
-Step 3: Sentence Transformer filtering...
-To filter by Sentence Transformer. Starting with 61 chunks
-Query: 'total revenue of 2018'
-Similarity ranking result and samples:
-  1. section_7_line_22
-     Similarity score: 0.5926
-     Preview: Income from Operations was $5,992,236 for the year ended December 31, 2018, as compared with operati...
-  2. section_1_line_8
-     Similarity score: 0.5659
-     Preview: As is common in China, we generate revenues from both the provision of patient services and the sale...
-  3. section_7_line_9
-     Similarity score: 0.5639
-     Preview: Operating revenue for the year ended December 31, 2018, which resulted primarily from medicine (i.e....
-Chunks filtered by semantic: 3 (thresholding at: 0.5)
-Found 3 chunks after step 3
-processing section_7_line_22... 
-  No exact revenue number found
-processing section_1_line_8... 
-  No exact revenue number found
-processing section_7_line_9... 
-  Found revenue figures:
-- Operating revenue (2018): $28,402,759
-- Operating revenue (2017): $24,147,957
-
-Retrieval results for file 1597892_2018.htm :
-  1597892_2018.htm_section_7_line_22: No exact revenue number found
-  1597892_2018.htm_section_1_line_8: No exact revenue number found
-  1597892_2018.htm_section_7_line_9: Found revenue figures:
-- Operating revenue (2018): $28,402,759
-- Operating revenue (2017): $24,147,957
+  1167419_2018.htm_section_7_line_26: No revenue information found
 
 ============================================================
-FINAL RESULTS:
+FINAL ANALYSIS:
 ============================================================
 
 File: 1667313_2018.htm
-  1667313_2018.htm_section_1_line_9: Found revenue figures:
-
-- Revenues: $10.8 million (fiscal 2018)
-- Revenues: $10.0 million (fiscal 2017)
   1667313_2018.htm_section_7_line_46: No exact revenue number found
+  1667313_2018.htm_section_1_line_9: Found 'revenues' figures: Fiscal 2018 revenues: $10.8 million; Fiscal 2017 revenues: $10.0 million.
 
 File: 1328143_2018.htm
-  1328143_2018.htm_section_7_line_26: No exact revenue number found
-  1328143_2018.htm_section_7_line_73: No revenue information found
   1328143_2018.htm_section_7_line_101: No revenue information found
-  1328143_2018.htm_section_7_line_110: Found the following revenue figures:
-- License and grant revenue: $3,000 (year ended Dec 31, 2017)
-- License and grant revenue: $0.6 million (year ended Dec 31, 2016)
-- License and grant revenue decreased by: $0.6 million
+  1328143_2018.htm_section_7_line_26: No exact revenue number found
+  1328143_2018.htm_section_7_line_110: Revenue: $3,000 (2017); $0.6 million (2016); decrease of $0.6 million (99%).
+  1328143_2018.htm_section_7_line_73: No revenue information found
 
 File: 10795_2018.htm
-  10795_2018.htm_section_7_line_43: Found the following revenue figure:
-- Revenues (Worldwide, 2018): $15.983 billion
-  10795_2018.htm_section_8_line_524: No revenue information found
-  10795_2018.htm_section_7_line_95: No exact revenue number found
-  10795_2018.htm_section_7_line_135: No revenue information found
   10795_2018.htm_section_7_line_124: No exact revenue number found
-  10795_2018.htm_section_7_line_138: No revenue information found
   10795_2018.htm_section_7_line_76: No revenue information found
-  10795_2018.htm_section_7_line_99: Found multiple revenue-related figures:
-
-- Emerging market revenues (2018): $2.53 billion
-- Emerging market revenues (2017): $1.95 billion
-- Emerging market revenues (2016): $1.9 billion
-- Foreign currency impact on emerging market revenues (2018): $19 million favorable
-- Foreign currency impact on emerging market revenues (2017): $29 million unfavorable
-- Emerging market revenues related to divested businesses (2016): approximately $105 million
-  10795_2018.htm_section_7_line_97: No exact revenue number found
   10795_2018.htm_section_7_line_83: No exact revenue number found
   10795_2018.htm_section_7_line_126: No exact revenue number found
+  10795_2018.htm_section_7_line_43: Found revenue-related figure: Worldwide revenues (2018): $15.983 billion.
+  10795_2018.htm_section_7_line_95: No exact revenue number found
+  10795_2018.htm_section_7_line_135: No revenue information found
+  10795_2018.htm_section_7_line_97: No exact revenue number found
   10795_2018.htm_section_7_line_63: No revenue information found
+  10795_2018.htm_section_8_line_524: No revenue information found
   10795_2018.htm_section_7_line_155: No revenue information found
+  10795_2018.htm_section_7_line_138: No revenue information found
+  10795_2018.htm_section_7_line_99: Found revenue-related figures: Emerging market revenues were $2.53 billion (2018), $1.95 billion (2017), and $1.9 billion (2016); foreign currency translation impact on emerging market revenues: +$19 million (2018) and -$29 million (2017); emerging market revenues related to divested businesses in 2016: approximately $105 million.
   10795_2018.htm_section_7_line_68: No exact revenue number found
 
 File: 1558465_2018.htm
-  1558465_2018.htm_section_7_line_104: No revenue information found
-  1558465_2018.htm_section_7_line_93: No revenue information found
-  1558465_2018.htm_section_7_line_84: Multiple revenue-related values found:
-
-- Net sales (2018): $9,026,962
-- Net sales (2017): $9,163,356
   1558465_2018.htm_section_15_line_164: No exact revenue number found
+  1558465_2018.htm_section_7_line_104: No revenue information found
   1558465_2018.htm_section_15_line_187: No exact revenue number found
+  1558465_2018.htm_section_7_line_93: No revenue information found
+  1558465_2018.htm_section_7_line_84: Found net sales: 2018 - 9,026,962; 2017 - 9,163,356.
 
 File: 1167419_2018.htm
-  1167419_2018.htm_section_7_line_24: Found multiple revenue figures:
-- Digital currency mining revenue: approximately $7,749,000 (2018) and $173,000 (2017)
-- Other revenue (license payments): approximately $97,000 in each period (2018 and 2017)
-  1167419_2018.htm_section_7_line_26: No exact revenue number found
   1167419_2018.htm_section_7_line_28: No revenue information found
+  1167419_2018.htm_section_7_line_24: Found revenue components: digital currency mining revenue of approximately $7,749,000 (2018) and $173,000 (2017); other revenue (license payments) of approximately $97,000 in each period (2018 and 2017). Derived total revenue: approximately $7,846,000 (2018) and $270,000 (2017).
   1167419_2018.htm_section_7_line_38: No revenue information found
+  1167419_2018.htm_section_7_line_26: No revenue information found
 
-File: 1746129_2018.htm
-  1746129_2018.htm_section_8_line_188: No revenue information found
-  1746129_2018.htm_section_7_line_77: No revenue information found
-  1746129_2018.htm_section_7_line_27: No revenue information found
+============================================================
+FINAL VALUES:
+============================================================
 
-File: 886128_2018.htm
-  886128_2018.htm_section_7_line_13: Found revenue-related values:
-- Total revenues: $89.4 million (year ended October 31, 2018)
-- Total revenues: $95.7 million (year ended October 31, 2017)
-- Total revenues decrease: $6.2 million
-  886128_2018.htm_section_8_line_99: Multiple revenue figures found:
-- revenue: $2.1 million (2018)
-- revenue: $2.7 million (2017)
-- revenue: $6.2 million (2016)
-  886128_2018.htm_section_8_line_371: No exact revenue number found
-  886128_2018.htm_section_7_line_60: Found revenue-related figures:
+File: 1667313_2018.htm gets total revenue in year 2018: 10.8 million
 
-- Total revenues (year ended Oct 31, 2017): $95.7 million
-- Total revenues (year ended Oct 31, 2016): $108.3 million
-- Total revenues decrease year-over-year: $12.6 million (12%)
-  886128_2018.htm_section_7_line_73: No exact revenue number found
-  886128_2018.htm_section_7_line_12: No exact revenue number found
-  886128_2018.htm_section_7_line_16: Multiple revenue figures found:
+File: 1328143_2018.htm gets total revenue in year 2018: 
 
-- Revenue (power plant), year ended Oct 31, 2018: $49.4 million
-- Revenue (engineering and construction services), year ended Oct 31, 2018: $3.1 million
-- Revenue (power plant), year ended Oct 31, 2017: $41.0 million
-- Revenue (engineering and construction services), year ended Oct 31, 2017: $2.0 million
-  886128_2018.htm_section_7_line_59: No exact revenue number found
-  886128_2018.htm_section_8_line_108: No exact revenue number found
-  886128_2018.htm_section_7_line_15: No exact revenue number found
-  886128_2018.htm_section_7_line_27: Found the following revenue figure:
-- Revenues (from generation), year ended October 31, 2018: $7.2 million
-  886128_2018.htm_section_7_line_31: Found revenue amounts:
-- Advanced Technologies contract revenue (year ended Oct 31, 2018): $14.0 million
-- Revenue (year ended Oct 31, 2017): $18.3 million
-  886128_2018.htm_section_7_line_30: No exact revenue number found
-  886128_2018.htm_section_7_line_62: No revenue information found
-  886128_2018.htm_section_7_line_18: No exact revenue number found
-  886128_2018.htm_section_7_line_77: No exact revenue number found
-  886128_2018.htm_section_7_line_74: Found revenue-related amounts:
+File: 10795_2018.htm gets total revenue in year 2018: 15.983 billion
 
-- Revenues (from generation) — $7.2 million for the year ended October 31, 2017
-- Revenues (from generation) — $1.3 million for the prior year period
-  886128_2018.htm_section_7_line_156: Found revenue-related term with associated number:
-- Deferred revenue: $1.3 million
-  886128_2018.htm_section_7_line_22: Multiple revenue figures found:
+File: 1558465_2018.htm gets total revenue in year 2018: 9,026,962
 
-- Revenues (from service agreements and license fee and royalty agreements): $15.8 million (2018); $27.1 million (2017); decrease of $11.3 million.
-- Revenue (from license, royalty and material management fees): $2.2 million (2018); $2.7 million (2017).
-  886128_2018.htm_section_8_line_107: No exact revenue number found
-  886128_2018.htm_section_8_line_372: Found revenue figures:
-- Service agreement revenue: $13.5 million (2018); $24.4 million (2017); $26.6 million (2016)
-  886128_2018.htm_section_7_line_78: Found the following revenue figures:
-- Advanced Technologies contracts revenue (year ended Oct 31, 2017): $18.3 million
-- Advanced Technologies contracts revenue (year ended Oct 31, 2016): $12.9 million
-  886128_2018.htm_section_1_line_31: No exact revenue number found
-  886128_2018.htm_section_7_line_24: No exact revenue number found
-
-File: 1681556_2018.htm
-  1681556_2018.htm_section_7_line_20: Found multiple revenue figures:
-
-- Revenues: $8,762,332 (2018); $8,407,088 (2017)
-- Related party revenues: $0 (2018); $104,000 (2017)
-  1681556_2018.htm_section_15_line_151: Found revenue-related term: "revenues"
-
-- $0 (revenues from related parties; twelve months ended Dec 31, 2018)
-- $104,000 (revenues from related parties; twelve months ended Dec 31, 2017)
-
-File: 817720_2018.htm
-  817720_2018.htm_section_15_line_362: No exact revenue number found
-  817720_2018.htm_section_15_line_358: No exact revenue number found
-  817720_2018.htm_section_15_line_357: No exact revenue number found
-  817720_2018.htm_section_7_line_37: No exact revenue number found
-  817720_2018.htm_section_7_line_6: Found the following revenue-related figures:
-
-- Net revenue: $947.5 million (fiscal 2014)
-- Net revenue: $1,630.3 million (fiscal 2018)
-
-- Net revenue mix (fiscal 2014):
-  - 27.2% of net revenue from the personal computer market
-  - 72.8% of net revenue from the mobile product applications market
-
-- Net revenue mix (fiscal 2018):
-  - 15.8% of net revenue from the personal computer market
-  - 62.6% of net revenue from the mobile product applications market
-  - 21.6% of net revenue from the IoT product applications market
-  817720_2018.htm_section_7_line_42: Found multiple net revenue figures:
-
-- Net revenue: $1,630.3 million (fiscal 2018)
-- Net revenue: $1,718.2 million (fiscal 2017)
-- Decrease in net revenue: $87.9 million
-
-Fiscal 2018 net revenue by market:
-- Mobile: $1,021.0 million
-- PC: $257.8 million
-- IoT: $351.5
-
-Changes in net revenue by application:
-- Mobile: -$385.0 million
-- IoT: +$268.5 million
-- PC: +$28.6 million
-  817720_2018.htm_section_15_line_340: No revenue information found
-  817720_2018.htm_section_7_line_55: No revenue information found
-  817720_2018.htm_section_7_line_63: Found multiple revenue figures:
-
-- Net revenue: $1,718.2 million (fiscal 2017)
-- Net revenue: $1,666.9 million (fiscal 2016)
-- Fiscal 2017 net revenue by market:
-  - Mobile product applications: $1,406.0 million (81.9% of net revenue)
-  - PC product applications: $229.2 million (13.3% of net revenue)
-  - IoT product applications: $83.0 million (4.8% of net revenue)
-- Change in net revenue (2017 vs 2016): +$51.3 million (+3.1%)
-- Change in net revenue by market:
-  - PC product applications: +$21.8 million (+10.5%)
-  - IoT product applications: +$21.7 million (+35.4%)
-  - Mobile product applications: +$7.8 million (+0.6%)
-- Decline in revenue from discrete display products: -16.5% (no dollar amount provided)
-  817720_2018.htm_section_15_line_339: No revenue information found
-  817720_2018.htm_section_15_line_194: No revenue information found
-  817720_2018.htm_section_1_line_321: No exact revenue number found
-  817720_2018.htm_section_7_line_34: No exact revenue number found
-  817720_2018.htm_section_7_line_75: No revenue information found
-
-File: 1597892_2018.htm
-  1597892_2018.htm_section_7_line_22: No exact revenue number found
-  1597892_2018.htm_section_1_line_8: No exact revenue number found
-  1597892_2018.htm_section_7_line_9: Found revenue figures:
-- Operating revenue (2018): $28,402,759
-- Operating revenue (2017): $24,147,957
+File: 1167419_2018.htm gets total revenue in year 2018: 7,846,000
+Closing down clientserver connection
