@@ -2,7 +2,7 @@ import json
 import os
 import argparse
 import requests
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Tuple
 import openai
 from datasets import load_dataset
 import numpy as np
@@ -18,10 +18,11 @@ import sys
 from datetime import datetime
 import logging
 import prompt
+import term_dict
 
 class EdgarRAGPipeline:
     
-    def __init__(self, openai_api_key: str, year: str = '2018', log_file_path: str = None):
+    def __init__(self, openai_api_key: str, year = '2018', key_options = ["REVENUE"], log_file_path: str = None):
 
         # logging to file 
         if log_file_path is None:
@@ -44,6 +45,7 @@ class EdgarRAGPipeline:
         self.openai_api_key = openai_api_key
         self.dataset = None
         self.year = year
+        self.key_options = key_options
 
         # init Sentence Transformer
         self.logger.info("loading Sentence Transformer...")
@@ -104,7 +106,7 @@ class EdgarRAGPipeline:
             #         "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
             #     }
             # )
-            # code = '1597892'
+            # code = '10795'
             # self.dataset = ds.filter(lambda x: x['cik'] == code)
 
             self.logger.info(self.dataset["test"]["filename"])
@@ -146,7 +148,7 @@ class EdgarRAGPipeline:
         
         return chunks
 
-    def filter_chunks_by_tokens_and_tfidf(self, chunks: Dict[str, str]) -> Dict[str, str]:
+    def filter_chunks_by_tokens_and_tfidf(self, chunks: Dict[str, str]) -> Dict[str, Dict[str, str]]:
         # Step 1: token filtering
         token_filtered = {}
         for key, text in chunks.items():
@@ -170,79 +172,106 @@ class EdgarRAGPipeline:
         tfidf_matrix = vectorizer.fit_transform(chunk_texts)
         feature_names = vectorizer.get_feature_names_out()
 
-        # retrieving revenue related terms
-        revenue_keywords = ['revenue', 'revenues', 'total revenue', 'net revenue', 'sales', 'income']
-        revenue_indices = []
+        results = {}
+    
+        # Process each feature in key_options
+        for feature in self.key_options:
+            self.logger.info(f"Processing feature: {feature}")
 
-        for keyword in revenue_keywords:
-            if keyword in feature_names:
-                revenue_indices.append(np.where(feature_names == keyword)[0][0])
+            # retrieving feature related terms
+            feature_keywords = term_dict.TERM_DICT[feature] # ['revenue', 'revenues', 'total revenue', 'net revenue', 'sales', 'income']
+            feature_indices = []
+    
+            for keyword in feature_keywords:
+                if keyword in feature_names:
+                    feature_indices.append(np.where(feature_names == keyword)[0][0])
+    
+            if not feature_indices:
+                self.logger.info("Feature related terms not found in TFIDF feature")
+                results[feature] = token_filtered  # return result from step-1
+                continue
+    
+            # tfidf score for each chunks 
+            feature_scores = []
+            for i in range(tfidf_matrix.shape[0]):
+                score = 0
+                for idx in feature_indices:
+                    score += tfidf_matrix[i, idx]
+                feature_scores.append(score)
+    
+            # filter by score>0 
+            selected_chunks = {}
+            for i, (key, text) in enumerate(zip(chunk_keys, chunk_texts)):
+                if feature_scores[i] > 0:
+                    selected_chunks[key] = text
+            self.logger.info(f"Chunks filtered by TFIDF: {len(selected_chunks)}")
+            results[feature] = selected_chunks
+    
+        return results
 
-        if not revenue_indices:
-            self.logger.info("Revenue related terms not found in TFIDF feature")
-            return token_filtered  # return result from step-1
-
-        # tfidf score for each chunks 
-        revenue_scores = []
-        for i in range(tfidf_matrix.shape[0]):
-            score = 0
-            for idx in revenue_indices:
-                score += tfidf_matrix[i, idx]
-            revenue_scores.append(score)
-
-        # filter by score>0 
-        selected_chunks = {}
-        for i, (key, text) in enumerate(zip(chunk_keys, chunk_texts)):
-            if revenue_scores[i] > 0:
-                selected_chunks[key] = text
-        self.logger.info(f"Chunks filtered by TFIDF: {len(selected_chunks)}")
-
-        return selected_chunks
-
-    def semantic_filter_with_sentence_transformer(self, chunks: Dict[str, str], 
-                                                 query: str = "total revenue of 2018") -> Dict[str, str]:
-        self.logger.info(f"To filter by Sentence Transformer. Starting with {len(chunks)} chunks")
-        self.logger.info(f"Query: '{query}'")
-        
-        if not chunks:
-            return {}
-        
-        chunk_keys = list(chunks.keys())
-        chunk_texts = list(chunks.values())
-        
-        query_embedding = self.sentence_model.encode([query])
-        chunk_embeddings = self.sentence_model.encode(chunk_texts, show_progress_bar=True)
-        similarities = cosine_similarity(query_embedding, chunk_embeddings)[0]
-        
-        top_indices = np.argsort(similarities)[::-1]
-        
-        selected_chunks = {}
+    def semantic_filter_with_sentence_transformer(self, chunks_by_feature: Dict[str, Dict[str, str]]) -> Dict[str, Dict[str, str]]:
+        results = {}
         similarity_threshold = 0.5
-       
-        self.logger.info("Similarity ranking result and samples:") 
-        for i, idx in enumerate(top_indices):
-            similarity_score = similarities[idx]
-            chunk_key = chunk_keys[idx]
-            chunk_preview = chunk_texts[idx][:100] + "..." if len(chunk_texts[idx]) > 100 else chunk_texts[idx]
-            
-            if similarity_score > similarity_threshold:
-                selected_chunks[chunk_key] = chunk_texts[idx]
-                self.logger.info(f"  {i+1}. {chunk_key}")
-                self.logger.info(f"     Similarity score: {similarity_score:.4f}")
-                self.logger.info(f"     Preview: {chunk_preview}")
+
+        # Process each feature
+        for feature in self.key_options:
+            chunks = chunks_by_feature.get(feature,{})
+            self.logger.info(f"To apply sementic filter for feature {feature}. Starting with {len(chunks)} chunks")
         
-        self.logger.info(f"Chunks filtered by semantic: {len(selected_chunks)} (thresholding at: {similarity_threshold})")
-        return selected_chunks
+            if not chunks:
+                self.logger.info(f"No chunks available for {feature}")
+                results[feature] = {}
+                continue
+
+            feature_keywords = term_dict.TERM_DICT[feature]
+            queries = [keyword + " of " + self.year for keyword in feature_keywords]
+            self.logger.info(f"Using {len(queries)} queries:")
+            for i, query in enumerate(queries):
+                self.logger.info(f"  Query {i}: '{query}'")
+
+            chunk_keys = list(chunks.keys())
+            chunk_texts = list(chunks.values())
+        
+            query_embeddings = self.sentence_model.encode(queries)
+            chunk_embeddings = self.sentence_model.encode(chunk_texts, show_progress_bar=True)
+            all_similarities = cosine_similarity(query_embeddings, chunk_embeddings)
+        
+            selected_chunks = {}
+       
+            self.logger.info("Similarity ranking result and samples:") 
+            for chunk_idx in range(len(chunk_texts)):
+                # for every chunk, check the score for every query
+                chunk_similarities = all_similarities[:, chunk_idx]
+                max_score = np.max(chunk_similarities)
+                if max_score > similarity_threshold:
+                    chunk_key = chunk_keys[chunk_idx]
+                    selected_chunks[chunk_key] = chunk_texts[chunk_idx]
+                    chunk_preview = chunk_texts[chunk_idx][:100] + "..." if len(chunk_texts[chunk_idx]) > 100 else chunk_texts[chunk_idx]
+                    self.logger.info(f"  Selected {chunk_key}")
+                    self.logger.info(f"     Similarity score: {max_score:.4f}")
+                    self.logger.info(f"     Preview: {chunk_preview}")
+       
+            results[feature] = selected_chunks 
+            self.logger.info(f"Chunks filtered by semantic for feature {feature}: {len(selected_chunks)} (thresholding at: {similarity_threshold})")
+        return results 
 
     @staticmethod
-    def process_partition(api_key_broadcast, partition_iterator, year = '2018'):
+    def process_partition(api_key_broadcast, partition_iterator, year_broadcast = '2018', key_options_broadcast = ["REVENUE"]):
         import openai
         client = openai.OpenAI(api_key=api_key_broadcast.value)
+        year = year_broadcast.value
+        key_options = key_options_broadcast.value
         
         for row in partition_iterator:
             chunk_key = row.chunk_key
             content = row.content
             filename = row.filename
+            feature = row.feature # only one feature is processed in a row
+
+            feature_upper = feature.upper()
+            if feature_upper == "REVENUE":
+                sys_prompt = prompt.SYS_PROMPT_REVENUE.format(year=year)
+                user_prompt = f"Extract total revenue information from this SEC filing text:\n\n{content[:4000]}"
             
             try:
                 response = client.chat.completions.create(
@@ -250,11 +279,11 @@ class EdgarRAGPipeline:
                     messages=[
                         {
                             "role": "system",
-                            "content": prompt.SYS_PROMPT_REVENUE.format(year=year)
+                            "content": sys_prompt 
                         },
                         {
                             "role": "user", 
-                            "content": f"Extract revenue information from this SEC filing text:\n\n{content[:4000]}"
+                            "content": user_prompt
                         }
                     ],
                     max_completion_tokens=3000,
@@ -266,30 +295,33 @@ class EdgarRAGPipeline:
                 # Parse JSON response
                 try:
                     response_json = json.loads(full_response)
-                    revenue_info = response_json.get("revenue analysis", "No analysis found")
-                    revenue_target_year = response_json.get("total revenue", "Not found")
+                    feature_lower = feature.lower()
+                    feature_info = response_json.get(f"{feature_lower} analysis", "No analysis found")
+                    feature_value = response_json.get(f"{feature_lower} value", "Not found")
                 except json.JSONDecodeError:
-                    revenue_info = full_response
-                    revenue_target_year = "JSON parse error"
+                    feature_info = full_response
+                    feature_value = "JSON parse error"
 
             except Exception as e:
-                revenue_info = f"API error: {str(e)}"
-                revenue_target_year = "API error"
+                feature_info = f"API error: {str(e)}"
+                feature_value = "API error"
 
-            yield (chunk_key, filename, content, revenue_info, revenue_target_year)
+            yield (chunk_key, filename, content, feature, feature_info, feature_value)
 
-    def pyspark_openai_extraction(self, chunks_dict: Dict[str, str], filename: str) -> Dict[str, str]:
+    def pyspark_openai_extraction(self, chunks_by_feature: Dict[str, Dict[str, str]], filename: str) -> Tuple[Dict[str, Dict[str, str]], Dict[str, str]]:
         try:
-            chunks_list = [
-                (chunk_key, content, filename) 
-                for chunk_key, content in chunks_dict.items()
-            ]
+            chunks_list = []
+            for feature, chunks_dict in chunks_by_feature.items():
+                for chunk_key, content in chunks_dict.items():
+                    chunks_list.append((chunk_key, content, filename, feature))
             
             self.logger.info(f"parallelized processing {len(chunks_list)} chunks")
+
             schema = StructType([
                 StructField("chunk_key", StringType(), True),
                 StructField("content", StringType(), True),
-                StructField("filename", StringType(), True)
+                StructField("filename", StringType(), True),
+                StructField("feature", StringType(), True)
             ])
             df = self.spark.createDataFrame(chunks_list, schema).repartition(self.max_concurrent) 
 
@@ -297,43 +329,51 @@ class EdgarRAGPipeline:
                 StructField("chunk_key", StringType(), True),
                 StructField("filename", StringType(), True),
                 StructField("content", StringType(), True),
-                StructField("revenue_info", StringType(), True),
-                StructField("total_revenue", StringType(), True)
+                StructField("feature", StringType(), True),
+                StructField("feature_info", StringType(), True),
+                StructField("feature_value", StringType(), True)
             ])          
  
             api_key_broadcast = self.spark.sparkContext.broadcast(self.openai_api_key)
+            year_broadcast = self.spark.sparkContext.broadcast(self.year)
+            key_options_broadcast = self.spark.sparkContext.broadcast(self.key_options)
             def partition_processor(partition_iterator):
-                return EdgarRAGPipeline.process_partition(api_key_broadcast, partition_iterator)
+                return EdgarRAGPipeline.process_partition(api_key_broadcast, partition_iterator, year_broadcast, key_options_broadcast)
 
             result_df = df.rdd.mapPartitions(partition_processor).toDF(output_schema)
             
             self.logger.info("Reduce to collect results...")
-            results_rows = result_df.select("chunk_key", "filename", "revenue_info", "total_revenue").collect()
+            results_rows = result_df.select("chunk_key", "filename", "feature", "feature_info", "feature_value").collect()
             
             final_results = {}
-            revenue_value = ""
+            feature_values = {}
+            for feature in self.key_options:
+                final_results[feature] = {}
+                feature_values[feature] = ""
+
             for row in results_rows:
+                feature = row.feature
                 full_key = f"{row.filename}_{row.chunk_key}"
-                revenue_info = row.revenue_info
-                final_results[full_key] = revenue_info
-                self.logger.info(f"Final results - {full_key}: {revenue_info}")
-                if row.total_revenue != "Not found":
-                    revenue_value = row.total_revenue
-           
-            self.logger.info(f"Final value - {revenue_value}") 
-            self.logger.info(f"PySpark processed {len(final_results)} chunks")
-            return final_results, revenue_value
+                feature_info = row.feature_info
+                final_results[feature][full_key] = feature_info
+                self.logger.info(f"Final results - {feature} - {full_key}: {feature_info}")
+                if row.feature_value != "Not found" and row.feature_value != "API error":
+                    feature_values[feature] = row.feature_value
+          
+            for feature in self.key_options: 
+                self.logger.info(f"Final value - {feature} - {feature_values[feature]}") 
+            return final_results, feature_values
             
         except Exception as e:
             self.logger.info(f"PySpark OpenAI API failed: {e}")
 
  
-    def process_document(self, document: Dict) -> Dict[str, str]:
+    def process_document(self, document: Dict) -> Tuple[Dict[str, Dict[str, str]], Dict[str, str]]:
 
         filename = document.get('filename')
+
         self.logger.info("="*80)
         self.logger.info(f"\nProcessing file: {filename}")
-
         self.logger.info("Step 1: chunk by section...")
         init_chunks = self.chunk_by_sections(document)
 
@@ -346,28 +386,28 @@ class EdgarRAGPipeline:
         self.logger.info("\nStep 2: token, TFIDF filtering...")
         tfidf_filtered = self.filter_chunks_by_tokens_and_tfidf(init_chunks)
 
-        if not tfidf_filtered:
+        has_any_chunks = any(chunks for chunks in tfidf_filtered.values())
+        if not has_any_chunks:
             self.logger.info(f"  No chunks found in {filename} after step 2")
-            return {filename: "No chunks found"}
-
-        self.logger.info(f"Found {len(tfidf_filtered)} chunks after step 2")
+            return {feature: {filename: "No chunks found"} for feature in self.key_options}
+        for feature, chunks in tfidf_filtered.items():
+            self.logger.info(f"Found {len(chunks)} chunks for {feature} after step 2")
 
         self.logger.info("\nStep 3: Sentence Transformer filtering...")
-        semantically_filtered = self.semantic_filter_with_sentence_transformer(
-            tfidf_filtered, 
-            "total revenue of 2018"
-        )
+        semantically_filtered = self.semantic_filter_with_sentence_transformer(tfidf_filtered)
         
-        if not semantically_filtered:
+        has_any_chunks = any(chunks for chunks in semantically_filtered.values())
+        if not has_any_chunks:
             self.logger.info(f"  No chunks found in {filename} after step 3")
-            return {filename: "No chunks found"}
-        self.logger.info(f"Found {len(semantically_filtered)} chunks after step 3")
+            return {feature: {filename: "No chunks found"} for feature in self.key_options}
+        for feature, chunks in semantically_filtered.items():
+            self.logger.info(f"Found {len(chunks)} chunks for {feature} after step 3")
 
-        results, value = self.pyspark_openai_extraction(semantically_filtered, filename)
+        results, values = self.pyspark_openai_extraction(semantically_filtered, filename)
 
-        return results, value
+        return results, values
     
-    def run_pipeline(self, n_files):
+    def run_pipeline(self, n_files = 5):
         self.logger.info("Starting EDGAR RAG Pipeline...")
         
         if not self.load_edgar_data():
@@ -383,51 +423,9 @@ class EdgarRAGPipeline:
         for i, document in enumerate(test_data_year[:n_files]):
             self.logger.info(f"\n=== Reading files {i+1}/{min(n_files, len(test_data_year))} ===")
             
-            results, value = self.process_document(document)
+            results, values = self.process_document(document)
             filename = document.get('filename', f'doc_{i}')
             all_results[filename] = results
-            all_values[filename] = value
-            
-            self.logger.info(f"\nRetrieval results for file {filename} :")
-            for key, value in results.items():
-                self.logger.info(f"  {key}: {value}")
-        
+            all_values[filename] = values
+   
         return all_results, all_values
-
-def main():
-    API_KEY = os.getenv("OPEN_API_KEY")
-    if API_KEY == "your-openai-api-key-here":
-        print("OpenAI API Key needed!")
-        return
-  
-    parser = argparse.ArgumentParser(description='year of file')
-    parser.add_argument('year', type=int, help='years in 1900-2030')
-    parser.add_argument('--format', default='YYYY')
-    args = parser.parse_args()
-    
-    if args.year < 1993 or args.year > 2020:
-        print("Files are in years 1993-2020")
-        return
-    year = str(args.year)
- 
-    pipeline = EdgarRAGPipeline(API_KEY, year)
-    results, values = pipeline.run_pipeline(n_files = 5)
-    
-    pipeline.logger.info("\n" + "="*60)
-    pipeline.logger.info("FINAL ANALYSIS:")
-    pipeline.logger.info("="*60)
-    
-    for filename, file_results in results.items():
-        pipeline.logger.info(f"\nFile: {filename}")
-        for section_key, revenue_info in file_results.items():
-            pipeline.logger.info(f"  {section_key}: {revenue_info}")
-
-    pipeline.logger.info("\n" + "="*60)
-    pipeline.logger.info("FINAL VALUES:")
-    pipeline.logger.info("="*60)
-    
-    for filename, file_results in values.items():
-        pipeline.logger.info(f"\nFile: {filename} gets total revenue in year {year}: {file_results}")
-
-if __name__ == "__main__":
-    main()
