@@ -1,3 +1,10 @@
+# similarity threshold
+similarity_threshold = {
+    "REVENUE": 0.5,
+    "LOSS": 0.4
+}
+
+
 # Revenue-related keywords
 REVENUE_KEYWORDS = [
     "total revenue",
@@ -13,13 +20,18 @@ REVENUE_KEYWORDS = [
 
 # Loss-related keywords
 LOSS_KEYWORDS = [
+    "total losses",
     "total loss",
-    "comprehensive loss",
-    "net loss"
+    "net losses",
+    "net loss", 
+    "total net losses",
+    "net income (loss)",
+    "loss",
+    "losses"
 ]
 
 # Main dictionary for term matching
 TERM_DICT = {
     "REVENUE": REVENUE_KEYWORDS,
-    "LOSS": LOSS_KEYWORDS
+    "LOSS": LOSS_KEYWORDS,
 }

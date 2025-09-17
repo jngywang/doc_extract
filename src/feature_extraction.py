@@ -27,8 +27,8 @@ def main():
         f.write("FINAL ANALYSIS:")
         f.write("="*60)
 
-        for filename, file_results in results.items():
-            for feature in key_options:
+        for feature in key_options:
+            for filename, file_results in results.items():
                 feature_results = file_results.get(feature, {})
 
                 f.write(f"\n=== {feature} Results for file {filename}===\n")
@@ -41,8 +41,9 @@ def main():
         f.write("FINAL VALUES:")
         f.write("="*60)
 
-        for filename, file_results in values.items():
-            for feature in key_options:
+        for feature in key_options:
+            f.write(f"\n=== {feature} Results ===\n")
+            for filename, file_results in values.items():
                 feature_value = file_results.get(feature, "")
                 f.write(f"\n--File: {filename} gets total revenue in year {year}: {feature_value}")
 

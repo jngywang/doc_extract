@@ -60,7 +60,7 @@ class EdgarRAGPipeline:
 
     def _init_pyspark(self, max_concurrent):
         try:
-            print("Init PySpark...")
+            self.logger.info("Init PySpark...")
             
             self.spark = SparkSession.builder \
                 .appName("EdgarRAGPipeline") \
@@ -82,13 +82,13 @@ class EdgarRAGPipeline:
             test_df = self.spark.createDataFrame([("test", 1)], ["text", "number"])
             test_count = test_df.count()
             self.spark_available = True
-            print(f"PySpark init！")
-            print(f"  - Spark version: {self.spark.version}")
-            print(f"  - core available: {self.spark.sparkContext.defaultParallelism}")
-            print(f"  - df size: {test_count}")
+            self.logger.info(f"PySpark init！")
+            self.logger.info(f"  - Spark version: {self.spark.version}")
+            self.logger.info(f"  - core available: {self.spark.sparkContext.defaultParallelism}")
+            self.logger.info(f"  - df size: {test_count}")
             
         except Exception as e:
-            print(f"PySpark init failed: {e}")
+            self.logger.info(f"PySpark init failed: {e}")
     
     def load_edgar_data(self):
         self.logger.info("loading EDGAR dataset...")
@@ -134,18 +134,16 @@ class EdgarRAGPipeline:
     def chunk_by_sections(self, document: Dict) -> Dict[str, str]:
         chunks = {}
         
-        for i in range(1, 16):
-            section_key = f'section_{i}'
-            # section_key = 'section_1'
-            if section_key in document and document[section_key]:
+        for section_key in document.keys():
+            if section_key.startswith('section_') and document[section_key]:
                 section_content = document[section_key]
                 lines = section_content.split('\n')
-                for i, line in enumerate(lines):
+                for line_idx, line in enumerate(lines):
                     if line.strip():
-                        chunk_key = f"{section_key}_line_{i}"
+                        chunk_key = f"{section_key}_line_{line_idx}"
                         chunks[chunk_key] = line.strip()
-        self.logger.info(f"Generated {len(chunks)} chunks")
         
+        self.logger.info(f"Generated {len(chunks)} chunks")
         return chunks
 
     def filter_chunks_by_tokens_and_tfidf(self, chunks: Dict[str, str]) -> Dict[str, Dict[str, str]]:
@@ -153,7 +151,7 @@ class EdgarRAGPipeline:
         token_filtered = {}
         for key, text in chunks.items():
             tokens = text.split()
-            if len(tokens) > 5:
+            if len(tokens) > 0:
                 token_filtered[key] = text
         self.logger.info(f"Chunks filtered by token>3 : {len(token_filtered)}")
         if not token_filtered:
@@ -184,7 +182,8 @@ class EdgarRAGPipeline:
     
             for keyword in feature_keywords:
                 if keyword in feature_names:
-                    feature_indices.append(np.where(feature_names == keyword)[0][0])
+                    idx = np.where(feature_names == keyword)[0][0]
+                    feature_indices.append(idx)
     
             if not feature_indices:
                 self.logger.info("Feature related terms not found in TFIDF feature")
@@ -211,7 +210,6 @@ class EdgarRAGPipeline:
 
     def semantic_filter_with_sentence_transformer(self, chunks_by_feature: Dict[str, Dict[str, str]]) -> Dict[str, Dict[str, str]]:
         results = {}
-        similarity_threshold = 0.5
 
         # Process each feature
         for feature in self.key_options:
@@ -224,7 +222,8 @@ class EdgarRAGPipeline:
                 continue
 
             feature_keywords = term_dict.TERM_DICT[feature]
-            queries = [keyword + " of " + self.year for keyword in feature_keywords]
+            # queries = [keyword + " of " + self.year for keyword in feature_keywords]
+            queries = [keyword for keyword in feature_keywords]
             self.logger.info(f"Using {len(queries)} queries:")
             for i, query in enumerate(queries):
                 self.logger.info(f"  Query {i}: '{query}'")
@@ -243,7 +242,8 @@ class EdgarRAGPipeline:
                 # for every chunk, check the score for every query
                 chunk_similarities = all_similarities[:, chunk_idx]
                 max_score = np.max(chunk_similarities)
-                if max_score > similarity_threshold:
+                chunk_preview = chunk_texts[chunk_idx][:100] + "..." if len(chunk_texts[chunk_idx]) > 100 else chunk_texts[chunk_idx]
+                if max_score > term_dict.similarity_threshold[feature]:
                     chunk_key = chunk_keys[chunk_idx]
                     selected_chunks[chunk_key] = chunk_texts[chunk_idx]
                     chunk_preview = chunk_texts[chunk_idx][:100] + "..." if len(chunk_texts[chunk_idx]) > 100 else chunk_texts[chunk_idx]
@@ -252,7 +252,7 @@ class EdgarRAGPipeline:
                     self.logger.info(f"     Preview: {chunk_preview}")
        
             results[feature] = selected_chunks 
-            self.logger.info(f"Chunks filtered by semantic for feature {feature}: {len(selected_chunks)} (thresholding at: {similarity_threshold})")
+            self.logger.info(f"Chunks filtered by semantic for feature {feature}: {len(selected_chunks)} (thresholding at: {term_dict.similarity_threshold[feature]})")
         return results 
 
     @staticmethod
@@ -272,6 +272,9 @@ class EdgarRAGPipeline:
             if feature_upper == "REVENUE":
                 sys_prompt = prompt.SYS_PROMPT_REVENUE.format(year=year)
                 user_prompt = f"Extract total revenue information from this SEC filing text:\n\n{content[:4000]}"
+            if feature_upper == "LOSS":
+                sys_prompt = prompt.SYS_PROMPT_LOSS.format(year=year)
+                user_prompt = f"Extract total loss information from this SEC filing text:\n\n{content[:4000]}"
             
             try:
                 response = client.chat.completions.create(
@@ -300,7 +303,7 @@ class EdgarRAGPipeline:
                     feature_value = response_json.get(f"{feature_lower} value", "Not found")
                 except json.JSONDecodeError:
                     feature_info = full_response
-                    feature_value = "JSON parse error"
+                    feature_value = "JSON parse error" + full_response
 
             except Exception as e:
                 feature_info = f"API error: {str(e)}"
