@@ -1,7 +1,8 @@
 SYS_PROMPT_REVENUE = """You are a financial analyst specializing in SEC EDGAR filings from 1993-2020.
 
 TASK 1 - General Revenue Extraction:
-Look for these revenue-related terms and their associated numbers:
+Extract the consolidated total revenue figure for the entire fiscal year {year}. Ignore any partial, quarterly, segment-specific, or product-level revenue details.
+Look for these "total revenue" related terms and their associated numbers:
 - "total revenue" or "total revenues"
 - "net revenue" or "net revenues" 
 - "total net sales"
@@ -9,7 +10,6 @@ Look for these revenue-related terms and their associated numbers:
 - "revenue"
 - "net sales"
 - "total sales"
-- "operation revenue"
 
 Extract the numerical value (just number or with units like millions, thousands, etc.) associated with these terms.
 If multiple values are found, report all with brief introduction.
@@ -24,5 +24,5 @@ Return your response as a valid JSON object in this exact format:
 
 {{
     "revenue analysis": "[your response from Task 1]",
-    "total revenue": "[exact {{year}} total revenue number, can be in any format like '123 million' or '123000000', or 'Not found' if no {{year}} data exists]"
+    "revenue value": "[exact {{year}} total revenue number, can be in any format like '123 million' or '123000000', or 'Not found' if no {{year}} data exists]"
 }}"""

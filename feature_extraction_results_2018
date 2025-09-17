@@ -1,0 +1,46 @@
+
+============================================================FINAL ANALYSIS:============================================================
+=== REVENUE Results for file 1667313_2018.htm===
+Number of processed chunks: 5
+--1667313_2018.htm_section_7_line_41: No exact revenue number found
+--1667313_2018.htm_section_1_line_9: Found multiple revenue figures: Fiscal 2018 revenues: $10.8 million. Fiscal 2017 revenues: $10.0 million.
+--1667313_2018.htm_section_7_line_46: No exact revenue number found
+--1667313_2018.htm_section_1_line_10: No exact revenue number found
+--1667313_2018.htm_section_7_line_40: No exact revenue number found
+
+=== REVENUE Results for file 1328143_2018.htm===
+Number of processed chunks: 2
+--1328143_2018.htm_section_7_line_110: No revenue information found
+--1328143_2018.htm_section_7_line_26: No exact revenue number found
+
+=== REVENUE Results for file 10795_2018.htm===
+Number of processed chunks: 10
+--10795_2018.htm_section_7_line_69: No exact revenue number found
+--10795_2018.htm_section_7_line_95: No exact revenue number found
+--10795_2018.htm_section_7_line_99: No consolidated total revenue information found. The provided text only includes segment-specific 'Emerging market revenues' (2018: $2.53 billion; 2017: $1.95 billion; 2016: $1.9 billion).
+--10795_2018.htm_section_7_line_124: No exact revenue number found
+--10795_2018.htm_section_7_line_43: Found 2018 consolidated 'revenues': $15.983 billion.
+--10795_2018.htm_section_7_line_68: No exact revenue number found
+--10795_2018.htm_section_7_line_126: No exact revenue number found
+--10795_2018.htm_section_7_line_83: No exact revenue number found
+--10795_2018.htm_section_7_line_97: No exact revenue number found
+--10795_2018.htm_section_8_line_366: No revenue information found
+
+=== REVENUE Results for file 1558465_2018.htm===
+Number of processed chunks: 3
+--1558465_2018.htm_section_7_line_84: Found 'net sales' for the year ended December 31, 2018: $9,026,962. Also found comparative 2017 net sales: $9,163,356.
+--1558465_2018.htm_section_15_line_164: No exact revenue number found
+--1558465_2018.htm_section_15_line_187: No exact revenue number found
+
+=== REVENUE Results for file 1167419_2018.htm===
+Number of processed chunks: 3
+--1167419_2018.htm_section_7_line_24: Found 'Revenue' breakdown for the year ended December 31, 2018. 2018: digital currency mining revenue ≈ $7,749,000 and other revenue (license payments) ≈ $97,000, totaling ≈ $7,846,000. Also provided for comparison: 2017 totals to ≈ $270,000 ($173,000 mining + $97,000 license).
+--1167419_2018.htm_section_7_line_26: No exact revenue number found
+--1167419_2018.htm_section_7_line_56: No exact revenue number found
+
+============================================================FINAL VALUES:============================================================
+--File: 1667313_2018.htm gets total revenue in year 2018: 10.8 million
+--File: 1328143_2018.htm gets total revenue in year 2018: 
+--File: 10795_2018.htm gets total revenue in year 2018: 15.983 billion
+--File: 1558465_2018.htm gets total revenue in year 2018: 9,026,962
+--File: 1167419_2018.htm gets total revenue in year 2018: 7,846,000

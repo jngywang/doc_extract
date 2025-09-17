@@ -8,11 +8,18 @@ REVENUE_KEYWORDS = [
     "revenues",
     "revenue",
     "net sales",
-    "total sales",
-    "operation revenue"
+    "total sales"
+]
+
+# Loss-related keywords
+LOSS_KEYWORDS = [
+    "total loss",
+    "comprehensive loss",
+    "net loss"
 ]
 
 # Main dictionary for term matching
 TERM_DICT = {
-    "revenue": REVENUE_KEYWORDS
+    "REVENUE": REVENUE_KEYWORDS,
+    "LOSS": LOSS_KEYWORDS
 }
