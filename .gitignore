@@ -1,6 +1,8 @@
+feature_extraction_results_5files
+*.swp
 *.txt
 *.pdf
-
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

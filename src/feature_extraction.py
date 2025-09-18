@@ -1,5 +1,6 @@
 import os
 import argparse
+import csv
 from edgar_rag_pipeline import EdgarRAGPipeline
 
 def main():
@@ -18,17 +19,19 @@ def main():
     year = str(args.year)
 
     # key_options: ["REVENUE", "LOSS", "INDUSTRY"]
-    key_options = ["REVENUE", "LOSS"]
+    key_options = ["LOSS"]
+    # key_options = ["REVENUE", "LOSS"]
+    key_options = ["REVENUE", "LOSS", "INDUSTRY"]
     pipeline = EdgarRAGPipeline(API_KEY, year, key_options)
-    results, values = pipeline.run_pipeline(n_files = 5)
+    results, values = pipeline.run_pipeline(n_files = 10)
 
     with open("../feature_extraction_results", "w") as f:
         f.write("\n" + "="*60)
         f.write("FINAL ANALYSIS:")
         f.write("="*60)
 
-        for filename, file_results in results.items():
-            for feature in key_options:
+        for feature in key_options:
+            for filename, file_results in results.items():
                 feature_results = file_results.get(feature, {})
 
                 f.write(f"\n=== {feature} Results for file {filename}===\n")
@@ -41,10 +44,21 @@ def main():
         f.write("FINAL VALUES:")
         f.write("="*60)
 
-        for filename, file_results in values.items():
-            for feature in key_options:
+        for feature in key_options:
+            f.write(f"\n=== {feature} Results ===\n")
+            for filename, file_results in values.items():
                 feature_value = file_results.get(feature, "")
-                f.write(f"\n--File: {filename} gets total revenue in year {year}: {feature_value}")
+                f.write(f"\n--File: {filename} has {feature} in year {year}: {feature_value}")
+
+    with open("../feature_extraction_results.csv", "w", newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(['Feature', 'Filename', 'Year', 'Feature_Value'])
+        
+        for feature in key_options:
+            for filename, file_results in values.items():
+                feature_value = file_results.get(feature, "")
+                writer.writerow([feature, filename, year, feature_value])
+
 
 if __name__ == "__main__":
     main()
