@@ -1,2 +1,2 @@
-# https://huggingface.co/datasets/eloukas/edgar-corpus/blob/main/2018/test.jsonl
+# https://huggingface.co/datasets/eloukas/edgar-corpus/blob/main/{year}/test.jsonl
 /Users/jingyawang/Downloads/edgar/{year}/test/*.jsonl
