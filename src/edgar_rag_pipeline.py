@@ -90,24 +90,21 @@ class EdgarRAGPipeline:
         except Exception as e:
             self.logger.info(f"PySpark init failed: {e}")
     
-    def load_edgar_data(self):
+    def load_edgar_data(self, data_path_config):
         self.logger.info("loading EDGAR dataset...")
         try:
-            self.dataset = load_dataset(
-                "json",
-                data_files={
-                    "test": f"/Users/jingyawang/Downloads/edgar/{self.year}/test/*.jsonl"
-                }
-            )
+            data_files = {}
+            with open(data_path_config, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith('#'): # skip comments
+                        continue
+                    formatted_path = line.format(year=self.year)
+                    path_parts = formatted_path.split('/')
+                    split_name = path_parts[-2] if len(path_parts) > 1 else "default"
+                    data_files[split_name] = formatted_path
 
-            # ds = load_dataset(
-            #     "json",
-            #     data_files={
-            #         "test": "/Users/jingyawang/Downloads/edgar/2018/test/test.jsonl"
-            #     }
-            # )
-            # code = '10795'
-            # self.dataset = ds.filter(lambda x: x['cik'] == code)
+            self.dataset = load_dataset("json", data_files=data_files)
 
             self.logger.info(self.dataset["test"]["filename"])
             return True
