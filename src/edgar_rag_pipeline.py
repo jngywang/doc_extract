@@ -22,7 +22,7 @@ import term_dict
 
 class EdgarRAGPipeline:
     
-    def __init__(self, openai_api_key: str, year = '2018', key_options = ["REVENUE"], log_file_path: str = None):
+    def __init__(self, openai_api_key: str, year = '2018', key_options = ["REVENUE"], data_path = "../data", log_file_path: str = None):
 
         # logging to file 
         if log_file_path is None:
@@ -46,6 +46,7 @@ class EdgarRAGPipeline:
         self.dataset = None
         self.year = year
         self.key_options = key_options
+        self.data_path = data_path
 
         # init Sentence Transformer
         self.logger.info("loading Sentence Transformer...")
@@ -90,11 +91,11 @@ class EdgarRAGPipeline:
         except Exception as e:
             self.logger.info(f"PySpark init failed: {e}")
     
-    def load_edgar_data(self, data_path_config):
+    def load_edgar_data(self):
         self.logger.info("loading EDGAR dataset...")
         try:
             data_files = {}
-            with open(data_path_config, 'r', encoding='utf-8') as f:
+            with open(self.data_path, 'r', encoding='utf-8') as f:
                 for line in f:
                     line = line.strip()
                     if not line or line.startswith('#'): # skip comments
