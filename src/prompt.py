@@ -19,6 +19,13 @@ If only related information found, but no exact number found, respond with "No e
 
 TASK 2 - Specific {year} Total Revenue:
 Additionally, you must extract the exact {year} total revenue as a separate piece of information. The response should start with number only.
+1) If an explicit consolidated total revenue/net sales for {year} exists, return it in "revenue value".
+2) Otherwise, attempt a careful reconstruction ONLY IF:
+   - Components are mutually exclusive and collectively exhaustive for consolidated operations in {year};
+   - Units/currencies are aligned; apply shown intersegment eliminations (sum segments then subtract eliminations if presented).
+   - Then compute: Total = Σ(components) [± eliminations]. Use the same unit as listed in the filing.
+   - If a nearby explicit total exists and differs by ≤1%, prefer the explicit figure.
+3) If you cannot confidently confirm full coverage, set "revenue value" to "Not found".
 
 RESPONSE FORMAT:
 Return your response as a valid JSON object in this exact format:
@@ -83,6 +90,10 @@ If only related context is present, but no explicit category name is given, resp
 
 TASK 2 - Conclusion:
 Return the most representative description of industry from all non-empty responses in TASK 1.  
+- You must always select one label if TASK 1 produced any valid industry reference.  
+- Extract the clearest industry label ONLY (e.g., "mobile app industry", "oil", "chemistry").  
+- Do not include extra words, sentence fragments, or context.  
+- If TASK 1 has no valid responses, return "Not found".
 
 RESPONSE FORMAT:
 Return your response as a valid JSON object in this exact format:

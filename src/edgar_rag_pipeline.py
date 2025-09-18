@@ -287,7 +287,7 @@ class EdgarRAGPipeline:
             
             try:
                 response = client.chat.completions.create(
-                    model="gpt-4.1-mini",
+                    model="gpt-5", #"gpt-4.1-mini",
                     messages=[
                         {
                             "role": "system",
@@ -299,8 +299,8 @@ class EdgarRAGPipeline:
                         }
                     ],
                     max_completion_tokens=3000,
-                    temperature = 0.1
-                    # reasoning_effort="medium"
+                    # temperature = 0.1
+                    reasoning_effort="medium"
                 )
                 
                 full_response = response.choices[0].message.content.strip()

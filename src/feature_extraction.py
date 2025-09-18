@@ -1,5 +1,6 @@
 import os
 import argparse
+import csv
 from edgar_rag_pipeline import EdgarRAGPipeline
 
 def main():
@@ -47,6 +48,17 @@ def main():
             for filename, file_results in values.items():
                 feature_value = file_results.get(feature, "")
                 f.write(f"\n--File: {filename} has {feature} in year {year}: {feature_value}")
+
+    with open("../feature_extraction_results.csv", "w", newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        
+        writer.writerow(['Feature', 'Filename', 'Year', 'Feature_Value'])
+        
+        for feature in key_options:
+            for filename, file_results in values.items():
+                feature_value = file_results.get(feature, "")
+                writer.writerow([feature, filename, year, feature_value])
+
 
 if __name__ == "__main__":
     main()
