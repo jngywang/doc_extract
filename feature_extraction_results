@@ -1,187 +1,504 @@
 
 ============================================================FINAL ANALYSIS:============================================================
 === REVENUE Results for file 1667313_2018.htm===
-Number of processed chunks: 10
---1667313_2018.htm_section_15_line_114: No exact revenue number found
---1667313_2018.htm_section_7_line_27: No exact revenue number found
---1667313_2018.htm_section_15_line_113: No exact revenue number found
---1667313_2018.htm_section_15_line_116: No exact revenue number found
---1667313_2018.htm_section_15_line_123: No exact revenue number found
---1667313_2018.htm_section_7_line_25: No exact revenue number found
---1667313_2018.htm_section_15_line_111: No exact revenue number found
---1667313_2018.htm_section_15_line_122: No exact revenue number found
---1667313_2018.htm_section_1_line_9: Found 'revenues' figures: Fiscal 2018 revenues = $10.8 million; Fiscal 2017 revenues = $10.0 million.
---1667313_2018.htm_section_7_line_28: No exact revenue number found
+Number of processed chunks: 7
+--1667313_2018.htm_section_1_line_9: The filing states that during fiscal 2018, the company generated revenues of $10.8 million.
+--1667313_2018.htm_section_15_line_123: No revenue information found
+--1667313_2018.htm_section_15_line_113: No revenue information found
+--1667313_2018.htm_section_15_line_114: No revenue information found
+--1667313_2018.htm_section_7_line_27: No revenue information found
+--1667313_2018.htm_section_15_line_116: No revenue information found
+--1667313_2018.htm_section_7_line_28: No revenue information found
 
 === REVENUE Results for file 1328143_2018.htm===
-Number of processed chunks: 12
---1328143_2018.htm_section_1A_line_215: No exact revenue number found
---1328143_2018.htm_section_7_line_63: No exact revenue number found
---1328143_2018.htm_section_8_line_62: No revenue information found
---1328143_2018.htm_section_7_line_25: No exact revenue number found
---1328143_2018.htm_section_7_line_110: No revenue information found
---1328143_2018.htm_section_8_line_179: No exact revenue number found
---1328143_2018.htm_section_1A_line_413: No exact revenue number found
+Number of processed chunks: 6
+--1328143_2018.htm_section_1A_line_413: No revenue information found
+--1328143_2018.htm_section_7_line_110: The text mentions 'License and grant revenue' and 'Revenue' related to specific years 2016 and 2017, but does not provide any total revenue or total net sales figures for 2018 or any other year.
+--1328143_2018.htm_section_1A_line_215: No revenue information found
 --1328143_2018.htm_section_7_line_26: No exact revenue number found
---1328143_2018.htm_section_8_line_70: No exact revenue number found
---1328143_2018.htm_section_1A_line_92: No exact revenue number found
---1328143_2018.htm_section_7_line_109: No exact revenue number found
---1328143_2018.htm_section_8_line_79: No exact revenue number found
+--1328143_2018.htm_section_8_line_70: No revenue information found
+--1328143_2018.htm_section_8_line_179: No revenue information found
 
 === REVENUE Results for file 10795_2018.htm===
-Number of processed chunks: 12
---10795_2018.htm_section_8_line_90: No exact revenue number found
---10795_2018.htm_section_8_line_243: No exact revenue number found
---10795_2018.htm_section_7_line_43: Found 2018 worldwide revenues (total): $15.983 billion.
---10795_2018.htm_section_7_line_93: No exact revenue number found
---10795_2018.htm_section_7_line_95: No exact revenue number found
---10795_2018.htm_section_8_line_92: No exact revenue number found
---10795_2018.htm_section_7_line_54: No exact revenue number found
---10795_2018.htm_section_7_line_85: No exact revenue number found
---10795_2018.htm_section_7_line_211: No exact revenue number found
---10795_2018.htm_section_7_line_57: No exact revenue number found
---10795_2018.htm_section_7_line_71: No exact revenue number found
---10795_2018.htm_section_8_line_537: No exact revenue number found
+Number of processed chunks: 9
+--10795_2018.htm_section_7_line_54: No revenue information found
+--10795_2018.htm_section_7_line_85: No revenue information found
+--10795_2018.htm_section_7_line_57: No revenue information found
+--10795_2018.htm_section_8_line_537: No revenue information found
+--10795_2018.htm_section_8_line_92: No revenue information found
+--10795_2018.htm_section_7_line_43: The filing states 'Worldwide revenues in 2018 of $15.983 billion'. This is the consolidated total revenue figure for the entire fiscal year 2018.
+--10795_2018.htm_section_7_line_95: The text mentions 'revenues' multiple times in relation to 2018 and specific segments, but does not provide any exact total revenue or net sales figures for the fiscal year 2018.
+--10795_2018.htm_section_7_line_71: No revenue information found
+--10795_2018.htm_section_8_line_243: No revenue information found
 
 === REVENUE Results for file 1558465_2018.htm===
-Number of processed chunks: 7
---1558465_2018.htm_section_15_line_162: No exact revenue number found
---1558465_2018.htm_section_15_line_187: No exact revenue number found
---1558465_2018.htm_section_7_line_49: No exact revenue number found
---1558465_2018.htm_section_7_line_84: Found net sales (total revenue) for the year ended December 31, 2018: $9,026,962.
+Number of processed chunks: 4
+--1558465_2018.htm_section_7_line_52: No revenue information found
+--1558465_2018.htm_section_7_line_84: The filing mentions 'Net sales' for the year ended December 31, 2018 as $9,026,962.
+--1558465_2018.htm_section_15_line_187: No revenue information found
 --1558465_2018.htm_section_15_line_164: No exact revenue number found
---1558465_2018.htm_section_7_line_52: No exact revenue number found
---1558465_2018.htm_section_7_line_83: No exact revenue number found
 
 === REVENUE Results for file 1167419_2018.htm===
-Number of processed chunks: 11
---1167419_2018.htm_section_7_line_56: No exact revenue number found
---1167419_2018.htm_section_7_line_78: No exact revenue number found
---1167419_2018.htm_section_7_line_25: No exact revenue number found
---1167419_2018.htm_section_8_line_82: No revenue information found
---1167419_2018.htm_section_8_line_129: No exact revenue number found
---1167419_2018.htm_section_7_line_24: Total revenue for 2018 is approximately $7,846,000 (mining ~$7,749,000 + license ~$97,000).
---1167419_2018.htm_section_7_line_73: No exact revenue number found
---1167419_2018.htm_section_8_line_128: No exact revenue number found
---1167419_2018.htm_section_7_line_23: No exact revenue number found
---1167419_2018.htm_section_8_line_100: No exact revenue number found
---1167419_2018.htm_section_8_line_107: No exact revenue number found
+Number of processed chunks: 6
+--1167419_2018.htm_section_7_line_56: No revenue information found
+--1167419_2018.htm_section_8_line_129: No revenue information found
+--1167419_2018.htm_section_7_line_78: No revenue information found
+--1167419_2018.htm_section_7_line_73: No revenue information found
+--1167419_2018.htm_section_8_line_107: No revenue information found
+--1167419_2018.htm_section_7_line_24: The filing mentions digital currency mining revenue of approximately $7,749,000 for 2018 and other revenue of approximately $97,000 for 2018. However, it does not explicitly state a consolidated total revenue figure or use terms like 'total revenue' or 'net revenue'.
+
+=== REVENUE Results for file 1746129_2018.htm===
+Number of processed chunks: 1
+--1746129_2018.htm_section_1A_line_18: No revenue information found
+
+=== REVENUE Results for file 886128_2018.htm===
+Number of processed chunks: 27
+--886128_2018.htm_section_7_line_60: The text provides total revenue figures for fiscal years 2016 and 2017 only. Specifically, total revenues for the year ended October 31, 2017 were $95.7 million, and for the year ended October 31, 2016 were $108.3 million. There is no information related to total revenue for the fiscal year 2018.
+--886128_2018.htm_section_1A_line_24: The text discusses the method of revenue recognition and mentions 'total revenue to be recognized to date' but does not provide any exact numerical revenue figures or amounts.
+--886128_2018.htm_section_7_line_216: No revenue information found
+--886128_2018.htm_section_7_line_125: No revenue information found
+--886128_2018.htm_section_8_line_73: No revenue information found
+--886128_2018.htm_section_8_line_101: No revenue information found
+--886128_2018.htm_section_8_line_372: The text mentions 'Service agreement revenue' included within 'Service agreements and license revenues' with specific amounts for 2018, 2017, and 2016, but does not provide a consolidated total revenue figure for 2018 or any other year.
+--886128_2018.htm_section_7_line_59: No revenue information found
+--886128_2018.htm_section_7_line_16: The filing mentions product revenues for the year ended October 31, 2018, totaling $49.4 million from power plant revenue and $3.1 million from engineering and construction services, but does not provide a consolidated total revenue figure.
+--886128_2018.htm_section_1A_line_40: No revenue information found
+--886128_2018.htm_section_7_line_74: No revenue information found for the fiscal year 2018. The only revenue data present is for the year ended October 31, 2017, with generation revenues totaling $7.2 million.
+--886128_2018.htm_section_8_line_72: No revenue information found
+--886128_2018.htm_section_7_line_157: No revenue information found
+--886128_2018.htm_section_8_line_85: No revenue information found
+--886128_2018.htm_section_8_line_108: No revenue information found
+--886128_2018.htm_section_1_line_31: No revenue information found
+--886128_2018.htm_section_7_line_13: The consolidated total revenues for the fiscal year 2018 were reported as $89.4 million. This figure is explicitly stated as 'Total revenues for the year ended October 31, 2018' and is compared to the prior year amount of $95.7 million.
+--886128_2018.htm_section_8_line_35: No revenue information found
+--886128_2018.htm_section_7_line_227: No revenue information found
+--886128_2018.htm_section_8_line_371: No exact revenue number found
+--886128_2018.htm_section_8_line_99: The filing mentions 'revenue' figures for the years ended October 31, 2018, 2017, and 2016 as $2.1 million, $2.7 million, and $6.2 million respectively. These appear to be total revenue figures for those years.
+--886128_2018.htm_section_7_line_12: No revenue information found
+--886128_2018.htm_section_7_line_73: No revenue information found
+--886128_2018.htm_section_7_line_217: No revenue information found
+--886128_2018.htm_section_7_line_222: No revenue information found
+--886128_2018.htm_section_8_line_78: No revenue information found
+--886128_2018.htm_section_8_line_107: The text mentions 'total annual consolidated revenue' for the years ended October 31, 2018, 2017, and 2016, but does not provide any exact numerical revenue figures.
+
+=== REVENUE Results for file 1681556_2018.htm===
+Number of processed chunks: 4
+--1681556_2018.htm_section_7_line_16: No revenue information found
+--1681556_2018.htm_section_7_line_20: The filing states that revenues for the year ended December 31, 2018 were $8,762,332. It also provides the 2017 revenue figure for comparison. The term 'Revenues' is used to describe the total revenue for the fiscal year 2018.
+--1681556_2018.htm_section_15_line_151: The filing mentions revenues from related parties for the twelve months ended December 31, 2018 and 2017, specifically $0 for 2018 and $104,000 for 2017. No other total revenue or net revenue figures are provided.
+--1681556_2018.htm_section_15_line_84: No revenue information found
+
+=== REVENUE Results for file 817720_2018.htm===
+Number of processed chunks: 13
+--817720_2018.htm_section_1A_line_169: The text mentions 'net revenue' but does not provide any exact revenue number.
+--817720_2018.htm_section_7_line_44: The text mentions 'net revenue' in relation to gross margin percentages and dollar amounts, but does not provide an exact total revenue figure for fiscal 2018.
+--817720_2018.htm_section_15_line_161: No revenue information found
+--817720_2018.htm_section_7_line_6: The filing mentions 'net revenue' figures for fiscal years 2014 and 2018. Specifically, net revenue increased from $947.5 million in 2014 to $1,630.3 million in 2018. There are no other total revenue or net sales figures provided.
+--817720_2018.htm_section_7_line_42: The filing states that net revenue was $1,630.3 million for fiscal 2018. This is the consolidated total net revenue figure for the entire fiscal year 2018. No other total revenue or sales figures are mentioned.
+--817720_2018.htm_section_15_line_358: No exact revenue number found
+--817720_2018.htm_section_15_line_362: The text mentions 'total net revenue' for fiscal 2018 but does not provide any exact numerical value associated with it.
+--817720_2018.htm_section_7_line_34: No revenue information found
+--817720_2018.htm_section_7_line_63: The filing provides net revenue figures for fiscal years 2017 and 2016 only. Specifically, net revenue was $1,718.2 million for fiscal 2017 and $1,666.9 million for fiscal 2016. There is no revenue information found for fiscal year 2018.
+--817720_2018.htm_section_7A_line_4: The text mentions 'total net revenue' for fiscal 2018, 2017, and 2016 but does not provide any exact numerical values associated with these terms.
+--817720_2018.htm_section_1A_line_15: No revenue information found
+--817720_2018.htm_section_7_line_37: No revenue information found
+--817720_2018.htm_section_15_line_357: No exact revenue number found
+
+=== REVENUE Results for file 1597892_2018.htm===
+Number of processed chunks: 4
+--1597892_2018.htm_section_8_line_197: No revenue information found
+--1597892_2018.htm_section_1_line_8: The text mentions 'total revenues' for the years ended December 31, 2018 and 2017, but does not provide any exact numerical revenue figures.
+--1597892_2018.htm_section_8_line_106: No revenue information found
+--1597892_2018.htm_section_7_line_9: The filing mentions 'operating revenue' for the year ended December 31, 2018, as $28,402,759. This appears to be the consolidated total revenue figure for the entire fiscal year 2018. No other total revenue or net sales figures are provided.
 
 === LOSS Results for file 1667313_2018.htm===
-Number of processed chunks: 17
---1667313_2018.htm_section_1_line_9: No loss information found
---1667313_2018.htm_section_1A_line_11: 2018 net losses: $1.6 million. Also referenced: 2017 net losses: $0.6 million (not 2018).
---1667313_2018.htm_section_7_line_53: No consolidated total net loss for fiscal year 2018 is provided in the text. Only a specific item is mentioned: a loss of $52,000 from NOK hedging activities in 2018 (not a consolidated total).
---1667313_2018.htm_section_15_line_159: No exact loss number found
---1667313_2018.htm_section_15_line_216: No exact loss number found
---1667313_2018.htm_section_7_line_24: No exact loss number found
---1667313_2018.htm_section_15_line_89: No exact loss number found
---1667313_2018.htm_section_15_line_131: No exact loss number found
---1667313_2018.htm_section_15_line_186: No exact loss number found
---1667313_2018.htm_section_7_line_57: No exact loss number found
---1667313_2018.htm_section_15_line_126: No exact loss number found
---1667313_2018.htm_section_15_line_161: No exact loss number found
---1667313_2018.htm_section_15_line_171: No exact loss number found
---1667313_2018.htm_section_1A_line_10: No exact loss number found
---1667313_2018.htm_section_7_line_32: No exact loss number found
---1667313_2018.htm_section_15_line_223: No exact loss number found
---1667313_2018.htm_section_15_line_226: No exact loss number found
+Number of processed chunks: 16
+--1667313_2018.htm_section_1A_line_10: The text mentions 'net losses' and potential future losses but does not provide any exact numerical loss figures.
+--1667313_2018.htm_section_7_line_57: No loss information found
+--1667313_2018.htm_section_15_line_159: No loss information found
+--1667313_2018.htm_section_7_line_32: No loss information found
+--1667313_2018.htm_section_15_line_131: No loss information found
+--1667313_2018.htm_section_15_line_186: No loss information found
+--1667313_2018.htm_section_15_line_223: No loss information found
+--1667313_2018.htm_section_1A_line_11: The filing mentions net losses of $1.6 million in fiscal 2018 and $0.6 million in fiscal 2017. The net loss for 2018 is specifically stated as $1.6 million.
+--1667313_2018.htm_section_15_line_126: No loss information found
+--1667313_2018.htm_section_15_line_171: No loss information found
+--1667313_2018.htm_section_15_line_216: No loss information found
+--1667313_2018.htm_section_1_line_9: The filing mentions a loss from operations of $1.3 million for fiscal 2018 and $0.7 million for fiscal 2017. No other total loss or net loss figures are provided.
+--1667313_2018.htm_section_7_line_24: No loss information found
+--1667313_2018.htm_section_7_line_53: The text mentions a loss of $52,000 in fiscal 2018 related to net loss from foreign exchange transactions and NOK hedging activities. No consolidated total loss or net loss for the entire fiscal year 2018 is provided.
+--1667313_2018.htm_section_15_line_161: No loss information found
+--1667313_2018.htm_section_15_line_226: The text mentions net operating losses (NOL) carryforwards of approximately $2.3 million for 2018 and a net operating loss from foreign operations of $420,000 for the period ended July 31, 2018. However, these are carryforwards and operational losses, not consolidated total loss figures for the fiscal year 2018. No consolidated total loss, net loss, or net income (loss) figure is provided.
 
 === LOSS Results for file 1328143_2018.htm===
-Number of processed chunks: 24
---1328143_2018.htm_section_1A_line_476: No exact loss number found
---1328143_2018.htm_section_7_line_83: No exact loss number found
---1328143_2018.htm_section_8_line_104: No exact loss number found
---1328143_2018.htm_section_8_line_125: No exact loss number found
---1328143_2018.htm_section_8_line_304: No exact loss number found
---1328143_2018.htm_section_8_line_292: No exact loss number found
---1328143_2018.htm_section_1A_line_477: No exact loss number found
---1328143_2018.htm_section_7_line_130: Found 'Net loss' for the year ended December 31, 2018: $131.0 million.
---1328143_2018.htm_section_8_line_56: No exact loss number found
---1328143_2018.htm_section_8_line_166: No exact loss number found
---1328143_2018.htm_section_8_line_305: No exact loss number found
---1328143_2018.htm_section_8_line_297: No exact loss number found
---1328143_2018.htm_section_1A_line_92: No exact loss number found
---1328143_2018.htm_section_7_line_132: Net loss for 2016: $60.1 million. No 2018 loss information found in the provided text.
---1328143_2018.htm_section_8_line_57: No exact loss number found
---1328143_2018.htm_section_8_line_281: No exact loss number found
---1328143_2018.htm_section_8_line_289: No exact loss number found
---1328143_2018.htm_section_8_line_283: No exact loss number found
---1328143_2018.htm_section_1A_line_395: No exact loss number found
---1328143_2018.htm_section_7_line_131: 2018 total loss information not found in provided text. Found related net loss for 2017: $89.5 million.
---1328143_2018.htm_section_8_line_25: No exact loss number found
---1328143_2018.htm_section_8_line_126: No exact loss number found
---1328143_2018.htm_section_8_line_303: No exact loss number found
---1328143_2018.htm_section_8_line_291: No exact loss number found
+Number of processed chunks: 21
+--1328143_2018.htm_section_7_line_83: No loss information found
+--1328143_2018.htm_section_8_line_56: No loss information found
+--1328143_2018.htm_section_7_line_132: The text provides net loss information for the year ended December 31, 2016, with a net loss of $60.1 million. No loss information for 2018 is found.
+--1328143_2018.htm_section_8_line_166: No loss information found
+--1328143_2018.htm_section_8_line_283: No loss information found
+--1328143_2018.htm_section_1A_line_395: No loss information found
+--1328143_2018.htm_section_1A_line_477: The text discusses federal and state net operating loss carryforwards of $271.6 million and $236.2 million respectively as of December 31, 2018. However, these are tax loss carryforwards and not consolidated total losses or net losses for the fiscal year 2018. No explicit consolidated total loss or net loss figure for 2018 is provided.
+--1328143_2018.htm_section_7_line_131: The filing mentions a net loss of $89.5 million for the year ended December 31, 2017. No loss information for 2018 is found.
+--1328143_2018.htm_section_8_line_104: No loss information found
+--1328143_2018.htm_section_8_line_291: No loss information found
+--1328143_2018.htm_section_1A_line_476: No loss information found
+--1328143_2018.htm_section_8_line_57: No loss information found
+--1328143_2018.htm_section_8_line_281: No loss information found
+--1328143_2018.htm_section_8_line_292: No loss information found
+--1328143_2018.htm_section_8_line_304: No loss information found
+--1328143_2018.htm_section_7_line_130: The consolidated total loss figure for the entire fiscal year 2018 is reported as a net loss of $131.0 million.
+--1328143_2018.htm_section_8_line_125: No loss information found
+--1328143_2018.htm_section_8_line_126: No loss information found
+--1328143_2018.htm_section_8_line_289: No loss information found
+--1328143_2018.htm_section_8_line_297: The text mentions 'net operating losses' carried forward for tax purposes related to calendar years ending 2002 through 2018, but does not provide any exact numerical value for total loss or net loss for fiscal year 2018.
+--1328143_2018.htm_section_8_line_305: No loss information found
 
 === LOSS Results for file 10795_2018.htm===
 Number of processed chunks: 15
---10795_2018.htm_section_7_line_109: No exact loss number found
---10795_2018.htm_section_8_line_139: No exact loss number found
+--10795_2018.htm_section_7_line_109: No loss information found
+--10795_2018.htm_section_8_line_133: No loss information found
+--10795_2018.htm_section_7_line_156: The provided text mentions losses recorded upon extinguishment of certain long-term notes in 2018 and 2017 included within Other, net, but does not specify any exact total loss or net loss figures for 2018 or the entire fiscal year. No exact total loss number or net loss value is found in the text.
+--10795_2018.htm_section_8_line_366: The text mentions a loss attributable to Bard of $(107) million in 2018 as part of Net Income. No other total loss or net loss figures for the entire fiscal year 2018 are provided.
+--10795_2018.htm_section_8_line_533: No loss information found
+--10795_2018.htm_section_8_line_139: No loss information found
+--10795_2018.htm_section_8_line_416: The text mentions net gains (losses) related to net investment hedges of $81 million gain and $159 million loss as of September 30, 2018 and 2017, respectively. However, these are related to foreign currency translation adjustments and not consolidated total net loss for the fiscal year 2018. No consolidated total loss or net loss figure for the entire fiscal year 2018 is found.
+--10795_2018.htm_section_8_line_423: The filing mentions a net realized loss of $6 million related to terminated interest rate swaps expected to be reclassified and recorded in Interest expense within the next 12 months. No consolidated total loss figure for the entire fiscal year 2018 is provided.
+--10795_2018.htm_section_8_line_135: No loss information found
+--10795_2018.htm_section_8_line_414: No loss information found
+--10795_2018.htm_section_8_line_134: No loss information found
 --10795_2018.htm_section_8_line_290: No loss information found
---10795_2018.htm_section_8_line_416: No exact loss number found
---10795_2018.htm_section_7_line_156: No exact loss number found
---10795_2018.htm_section_8_line_135: No exact loss number found
---10795_2018.htm_section_8_line_366: No loss information found
---10795_2018.htm_section_8_line_414: No exact loss number found
---10795_2018.htm_section_8_line_134: No exact loss number found
---10795_2018.htm_section_8_line_281: No exact loss number found
---10795_2018.htm_section_8_line_479: No exact loss number found
---10795_2018.htm_section_8_line_423: No consolidated fiscal year 2018 total loss information found in the provided text. The only loss mentioned is a net realized loss related to terminated interest rate swaps of $6 million (expected to be reclassified), which is not the total company total loss.
---10795_2018.htm_section_8_line_133: No exact loss number found
---10795_2018.htm_section_8_line_533: No exact loss number found
---10795_2018.htm_section_8_line_439: No exact loss number found
+--10795_2018.htm_section_8_line_281: The text mentions 'amortization of loss' and 'settlement losses recorded in 2018 and 2016' related to pension plans, but does not provide any consolidated total loss figures or exact numerical values for total losses or net losses for 2018.
+--10795_2018.htm_section_8_line_479: The text mentions a loss on debt extinguishment of $42 million recognized in December 2016. No loss information related to the fiscal year 2018 is found.
+--10795_2018.htm_section_8_line_439: No loss information found
 
 === LOSS Results for file 1558465_2018.htm===
-Number of processed chunks: 11
---1558465_2018.htm_section_7_line_40: No exact loss number found
---1558465_2018.htm_section_15_line_115: No exact loss number found
---1558465_2018.htm_section_15_line_142: No exact loss number found
---1558465_2018.htm_section_15_line_153: No exact loss number found
---1558465_2018.htm_section_7_line_48: No exact loss number found
---1558465_2018.htm_section_15_line_151: No exact loss number found
---1558465_2018.htm_section_15_line_243: No exact loss number found
---1558465_2018.htm_section_15_line_161: No exact loss number found
---1558465_2018.htm_section_7_line_30: No exact loss number found
---1558465_2018.htm_section_7_line_41: No exact loss number found
---1558465_2018.htm_section_15_line_154: No exact loss number found
+Number of processed chunks: 9
+--1558465_2018.htm_section_7_line_30: No loss information found
+--1558465_2018.htm_section_7_line_41: No loss information found
+--1558465_2018.htm_section_15_line_115: No loss information found
+--1558465_2018.htm_section_15_line_151: The text mentions Net Operating Loss Carryforwards and deferred tax assets related to these losses for the periods ended December 31, 2018 and 2017. However, it does not provide any consolidated total loss, net loss, or net income (loss) figures for the fiscal year 2018 or any other year.
+--1558465_2018.htm_section_15_line_161: No loss information found
+--1558465_2018.htm_section_15_line_154: No loss information found
+--1558465_2018.htm_section_15_line_243: No loss information found
+--1558465_2018.htm_section_7_line_48: No loss information found
+--1558465_2018.htm_section_15_line_142: No loss information found
 
 === LOSS Results for file 1167419_2018.htm===
-Number of processed chunks: 21
---1167419_2018.htm_section_1A_line_3: No exact loss number found
---1167419_2018.htm_section_7_line_4: No exact loss number found
---1167419_2018.htm_section_7_line_47: No exact loss number found
---1167419_2018.htm_section_8_line_133: No exact loss number found
---1167419_2018.htm_section_8_line_141: No exact loss number found
---1167419_2018.htm_section_8_line_374: No exact loss number found
---1167419_2018.htm_section_1A_line_6: No exact loss number found
---1167419_2018.htm_section_7_line_42: Found: Net loss of $60,213,000 for the year ended December 31, 2018. Also noted: Net loss from continuing operations of $60,309,000 and net income from discontinued operations of approximately $96,000.
---1167419_2018.htm_section_7_line_69: No exact loss number found
---1167419_2018.htm_section_8_line_371: No loss information found
---1167419_2018.htm_section_8_line_375: No exact loss number found
---1167419_2018.htm_section_7_line_7: No exact loss number found
---1167419_2018.htm_section_7_line_55: Found: loss of $60,309,000 (from continuing operations) for the year ended December 31, 2018. No explicit consolidated total net loss for 2018 is provided in the excerpt.
---1167419_2018.htm_section_8_line_52: No exact loss number found
---1167419_2018.htm_section_8_line_139: No exact loss number found
---1167419_2018.htm_section_8_line_379: No exact loss number found
---1167419_2018.htm_section_1A_line_5: No exact loss number found
+Number of processed chunks: 20
+--1167419_2018.htm_section_7_line_42: The filing reports a net loss of $60,213,000 for the year ended December 31, 2018. This includes a net loss from continuing operations of $60,309,000 and net income from discontinued operations of approximately $96,000. The net loss figure is the consolidated total loss for the fiscal year 2018.
 --1167419_2018.htm_section_7_line_56: No loss information found
---1167419_2018.htm_section_8_line_80: No exact loss number found
---1167419_2018.htm_section_8_line_140: No exact loss number found
---1167419_2018.htm_section_8_line_380: No exact loss number found
+--1167419_2018.htm_section_7_line_55: The filing mentions a loss of $60,309,000 from continuing operations during the year ended December 31, 2018. This is the primary consolidated loss figure related to 2018. No other total loss or net loss figures for the entire fiscal year 2018 are explicitly stated.
+--1167419_2018.htm_section_8_line_371: No loss information found
+--1167419_2018.htm_section_8_line_140: No loss information found
+--1167419_2018.htm_section_8_line_380: No loss information found
+--1167419_2018.htm_section_1A_line_5: No exact loss number found
+--1167419_2018.htm_section_1A_line_6: The filing mentions an accumulated deficit of $197,199,000 as of December 31, 2018, which indicates total losses accumulated over time. However, no explicit total loss or net loss figure for the fiscal year 2018 is provided.
+--1167419_2018.htm_section_7_line_69: No loss information found
+--1167419_2018.htm_section_8_line_80: No loss information found
+--1167419_2018.htm_section_8_line_133: No loss information found
+--1167419_2018.htm_section_1A_line_3: No exact loss number found
+--1167419_2018.htm_section_7_line_7: The text mentions that the Company expects to continue to incur losses from operations and that these losses could be significant, but no exact loss number is provided.
+--1167419_2018.htm_section_7_line_47: The text mentions expected continued losses from operations and potential significant losses due to various expenses, but no exact loss number is provided.
+--1167419_2018.htm_section_8_line_374: No loss information found
+--1167419_2018.htm_section_7_line_4: The filing mentions an accumulated deficit of $197,199,000 as of December 31, 2018, which indicates total losses accumulated over time. However, no explicit total loss or net loss figure for the fiscal year 2018 is provided.
+--1167419_2018.htm_section_8_line_52: The filing mentions an accumulated deficit of $197,199,000 as of December 31, 2018, which indicates total losses accumulated over time. No explicit total net loss or net loss figure for the fiscal year 2018 is provided.
+--1167419_2018.htm_section_8_line_141: The text mentions 'net loss per share' and that the company has only incurred losses, but does not provide any exact numerical loss figures for the fiscal year 2018 or otherwise.
+--1167419_2018.htm_section_8_line_375: No loss information found
+--1167419_2018.htm_section_8_line_379: No loss information found
+
+=== LOSS Results for file 1746129_2018.htm===
+Number of processed chunks: 22
+--1746129_2018.htm_section_1A_line_53: No loss information found
+--1746129_2018.htm_section_7_line_162: No loss information found
+--1746129_2018.htm_section_8_line_60: No loss information found
+--1746129_2018.htm_section_8_line_75: No loss information found
+--1746129_2018.htm_section_8_line_132: No loss information found
+--1746129_2018.htm_section_8_line_263: No loss information found
+--1746129_2018.htm_section_1_line_46: No loss information found
+--1746129_2018.htm_section_7A_line_4: No loss information found
+--1746129_2018.htm_section_7_line_169: No loss information found
+--1746129_2018.htm_section_8_line_97: No loss information found
+--1746129_2018.htm_section_8_line_66: No loss information found
+--1746129_2018.htm_section_8_line_125: No loss information found
+--1746129_2018.htm_section_7_line_68: No loss information found
+--1746129_2018.htm_section_1A_line_51: No loss information found
+--1746129_2018.htm_section_7_line_73: No loss information found
+--1746129_2018.htm_section_7_line_109: No loss information found
+--1746129_2018.htm_section_8_line_63: No loss information found
+--1746129_2018.htm_section_1A_line_52: No loss information found
+--1746129_2018.htm_section_7_line_114: No loss information found
+--1746129_2018.htm_section_8_line_58: No loss information found
+--1746129_2018.htm_section_8_line_129: No loss information found
+--1746129_2018.htm_section_8_line_195: No loss information found
+
+=== LOSS Results for file 886128_2018.htm===
+Number of processed chunks: 30
+--886128_2018.htm_section_7_line_55: The text mentions 'Net loss attributable to common stockholders and loss per common share' but does not provide any exact numerical loss value.
+--886128_2018.htm_section_7_line_44: No loss information found
+--886128_2018.htm_section_7_line_100: The filing mentions net loss attributable to common stockholders for the years ended 2017 and 2016 as $57.1 million and $54.2 million respectively. No loss information for 2018 is provided.
+--886128_2018.htm_section_7_line_87: No loss information found
+--886128_2018.htm_section_8_line_403: No loss information found
+--886128_2018.htm_section_8_line_114: No loss information found
+--886128_2018.htm_section_8_line_6: No loss information found
+--886128_2018.htm_section_7_line_56: The filing mentions 'net loss attributable to common stockholders' for the years ended October 31, 2018 and 2017. For 2018, the net loss attributable to common stockholders was $62.2 million. For 2017, it was $57.1 million.
+--886128_2018.htm_section_1A_line_3: No exact loss number found
+--886128_2018.htm_section_7_line_91: No loss information found
+--886128_2018.htm_section_7_line_60: No loss information found
+--886128_2018.htm_section_7_line_156: The filing mentions a net loss of $47.3 million for fiscal year 2018.
+--886128_2018.htm_section_8_line_115: The filing mentions foreign currency transaction losses of $(0.7) million for the year ended October 31, 2018, classified as other income, net. However, no consolidated total loss or net loss figure for the entire fiscal year 2018 is provided.
+--886128_2018.htm_section_8_line_432: No loss information found
+--886128_2018.htm_section_1A_line_62: No loss information found
+--886128_2018.htm_section_7_line_40: The filing mentions a 'Loss from operations' for the year ended October 31, 2018 of $44.6 million. No other total loss or net loss figures are provided.
+--886128_2018.htm_section_7_line_99: The text mentions 'Net loss attributable to common stockholders and loss per common share' but does not provide any exact numerical loss value.
+--886128_2018.htm_section_7_line_95: No exact loss number found
+--886128_2018.htm_section_8_line_33: No loss information found
+--886128_2018.htm_section_8_line_404: No loss information found
+--886128_2018.htm_section_8_line_446: No exact loss number found
+--886128_2018.htm_section_7_line_18: The filing mentions a gross loss from product revenues of $2.0 million for the year ended October 31, 2018. No other total loss or net loss figures are provided for the entire fiscal year 2018.
+--886128_2018.htm_section_1A_line_60: No loss information found
+--886128_2018.htm_section_1A_line_137: No loss information found
+--886128_2018.htm_section_7_line_70: No loss information found
+--886128_2018.htm_section_7_line_93: No loss information found
+--886128_2018.htm_section_7_line_96: No loss information found
+--886128_2018.htm_section_8_line_93: The filing mentions loss accruals on service agreements totaling $0.9 million as of October 31, 2018, but does not provide any consolidated total loss, net loss, or net income (loss) figures for the entire fiscal year 2018.
+--886128_2018.htm_section_7_line_157: The text mentions a net loss of $53.9 million for fiscal year 2017. No loss information for fiscal year 2018 is found.
+--886128_2018.htm_section_8_line_414: No loss information found
+
+=== LOSS Results for file 1681556_2018.htm===
+Number of processed chunks: 2
+--1681556_2018.htm_section_7_line_30: The net loss for the year ended December 31, 2018 was $5,105,047. Additionally, the net loss for 2017 was $867,035.
+--1681556_2018.htm_section_15_line_90: No loss information found
+
+=== LOSS Results for file 817720_2018.htm===
+Number of processed chunks: 14
+--817720_2018.htm_section_15_line_164: No loss information found
+--817720_2018.htm_section_15_line_130: No loss information found
+--817720_2018.htm_section_15_line_171: The filing mentions a net loss related to foreign currency transactions and remeasurement of $1.1 million for fiscal year 2018. This loss is specific to foreign currency transactions and is included in selling, general, and administrative expenses. No other total or consolidated net loss figures for the entire fiscal year 2018 are provided.
+--817720_2018.htm_section_15_line_346: No loss information found
+--817720_2018.htm_section_7_line_69: No loss information found
+--817720_2018.htm_section_15_line_212: The filing mentions an operating loss of approximately $37.0 million from Conexant for the period from the Conexant Closing Date through June 30, 2018. No consolidated total loss or net loss figure for the entire fiscal year 2018 is provided.
+--817720_2018.htm_section_15_line_226: No exact loss number found
+--817720_2018.htm_section_1A_line_229: No loss information found
+--817720_2018.htm_section_7_line_16: No loss information found
+--817720_2018.htm_section_15_line_168: No loss information found
+--817720_2018.htm_section_15_line_339: No loss information found
+--817720_2018.htm_section_7_line_83: The consolidated total loss figure for fiscal year 2018 is reported as a net loss of $124.1 million.
+--817720_2018.htm_section_1A_line_227: No loss information found
+--817720_2018.htm_section_15_line_169: No loss information found
+
+=== LOSS Results for file 1597892_2018.htm===
+Number of processed chunks: 1
+--1597892_2018.htm_section_8_line_78: No loss information found
+
+=== INDUSTRY Results for file 1667313_2018.htm===
+Number of processed chunks: 13
+--1667313_2018.htm_section_1_line_20: mobile app industry
+--1667313_2018.htm_section_1_line_34: No exact industry category found
+--1667313_2018.htm_section_15_line_284: No exact industry category found
+--1667313_2018.htm_section_1A_line_89: No exact industry category found
+--1667313_2018.htm_section_1A_line_16: nascent mobile advertising industry
+--1667313_2018.htm_section_1A_line_173: No exact industry category found
+--1667313_2018.htm_section_15_line_235: No exact industry category found
+--1667313_2018.htm_section_1A_line_34: No exact industry category found
+--1667313_2018.htm_section_1A_line_60: No exact industry category found
+--1667313_2018.htm_section_7_line_68: No exact industry category found
+--1667313_2018.htm_section_1A_line_40: The mobile internet business
+--1667313_2018.htm_section_1A_line_159: No exact industry category found
+--1667313_2018.htm_section_1A_line_73: internet and smartphone industries
+
+=== INDUSTRY Results for file 1328143_2018.htm===
+Number of processed chunks: 15
+--1328143_2018.htm_section_1_line_158: pharmaceutical industry
+--1328143_2018.htm_section_1_line_163: No exact industry category found
+--1328143_2018.htm_section_1A_line_433: No exact industry category found
+--1328143_2018.htm_section_1A_line_360: No exact industry category found
+--1328143_2018.htm_section_8_line_262: No exact industry category found
+--1328143_2018.htm_section_1A_line_451: No exact industry category found
+--1328143_2018.htm_section_1_line_88: Our industry is highly competitive and subject to rapid and significant technological change. ... competition from large pharmaceutical and biotechnology companies, smaller pharmaceutical and biotechnology
+--1328143_2018.htm_section_1A_line_202: U.S. pharmaceutical industry
+--1328143_2018.htm_section_1A_line_439: No exact industry category found
+--1328143_2018.htm_section_1A_line_208: No exact industry category found
+--1328143_2018.htm_section_7_line_69: No exact industry category found
+--1328143_2018.htm_section_1A_line_442: No exact industry category found
+--1328143_2018.htm_section_1A_line_367: No exact industry category found
+--1328143_2018.htm_section_1A_line_452: No exact industry category found
+--1328143_2018.htm_section_8_line_73: No exact industry category found
+
+=== INDUSTRY Results for file 10795_2018.htm===
+Number of processed chunks: 16
+--10795_2018.htm_section_1A_line_43: No exact industry category found
+--10795_2018.htm_section_1A_line_5: The medical technology industry
+--10795_2018.htm_section_7_line_218: software industry-specific revenue recognition requirements
+--10795_2018.htm_section_7_line_219: No exact industry category found
+--10795_2018.htm_section_8_line_313: No exact industry category found
+--10795_2018.htm_section_1A_line_6: healthcare industry
+--10795_2018.htm_section_7_line_226: software industry-specific revenue recognition requirements
+--10795_2018.htm_section_8_line_96: No exact industry category found
+--10795_2018.htm_section_1_line_3: BD is a global medical technology company engaged in the development, manufacture and sale of a broad range of medical supplies, devices, laboratory equipment and diagnostic products used by healthcare institutions, physicians, life science researchers, clinical laboratories, the pharmaceutical industry and the general public.
+--10795_2018.htm_section_1A_line_7: The medical technology industry
+--10795_2018.htm_section_7_line_4: medical technology company engaged in the development, manufacture and sale of a broad range of medical supplies, devices, laboratory equipment and diagnostic products
+--10795_2018.htm_section_8_line_441: No exact industry category found
+--10795_2018.htm_section_8_line_306: No exact industry category found
+--10795_2018.htm_section_1A_line_8: The medical technology industry
+--10795_2018.htm_section_7_line_48: healthcare industry
+--10795_2018.htm_section_7_line_277: healthcare industry
+
+=== INDUSTRY Results for file 1558465_2018.htm===
+Number of processed chunks: 2
+--1558465_2018.htm_section_15_line_91: oil and gas industry
+--1558465_2018.htm_section_1_line_10: oil and gas industry
+
+=== INDUSTRY Results for file 1167419_2018.htm===
+Number of processed chunks: 28
+--1167419_2018.htm_section_1_line_101: mining hardware which performs computational operations in support of the blockchain; mining industry; digital currency mining
+--1167419_2018.htm_section_1A_line_17: blockchain sector
+--1167419_2018.htm_section_1A_line_21: digital currency industry
+--1167419_2018.htm_section_1A_line_64: a new and rapidly evolving industry that employs digital currency assets based upon a computer-generated mathematical and/or cryptographic protocol
+--1167419_2018.htm_section_1A_line_36: digital currency industry
+--1167419_2018.htm_section_1A_line_219: No exact industry category found
+--1167419_2018.htm_section_1A_line_213: No exact industry category found
+--1167419_2018.htm_section_7_line_5: digital currency mining operation; digital currency exchange; blockchain and digital currency related business sector
+--1167419_2018.htm_section_1_line_29: sector and industry as a whole, as well as the entirety of the concept behind blockchain and digital currency as value
+--1167419_2018.htm_section_1_line_125: blockchain industry
+--1167419_2018.htm_section_1A_line_7: blockchain and digital currency related business sector
+--1167419_2018.htm_section_1A_line_128: No exact industry category found
+--1167419_2018.htm_section_1A_line_166: business involving digital currency activities; money transmitter; digital currency business activity
+--1167419_2018.htm_section_1A_line_229: No exact industry category found
+--1167419_2018.htm_section_7_line_13: blockchain and digital currency sector
+--1167419_2018.htm_section_1A_line_170: No exact industry category found
+--1167419_2018.htm_section_1_line_50: digital currency mining
+--1167419_2018.htm_section_1A_line_4: blockchain and digital currency-related business; digital currency mining; digital currency exchange; futures brokerage operation
+--1167419_2018.htm_section_1A_line_57: blockchain, digital currency assets and digital currency
+--1167419_2018.htm_section_1A_line_217: No exact industry category found
+--1167419_2018.htm_section_8_line_412: financial services industry
+--1167419_2018.htm_section_1A_line_168: No exact industry category found
+--1167419_2018.htm_section_1_line_112: digital currency mining operation
+--1167419_2018.htm_section_1A_line_15: business sector
+--1167419_2018.htm_section_1A_line_157: digital currency industry; blockchain technology industry
+--1167419_2018.htm_section_8_line_409: digital currency miners; digital currency business opportunities; energy capacity buildout for digital currency mining operations
+--1167419_2018.htm_section_8_line_53: The Company’s primary focus is on its digital currency mining operation located in Oklahoma City, Oklahoma, along with its investigation of the launch of RiotX as a digital currency exchange in the United States. That operational focus and the Company’s recently completed acquisitions of Kairos and 1172767 B.C. Ltd. (“1172767” or “Tess”), formerly known as Tess Inc., and its investment in goNumerical Ltd., (d/b/a “Coinsquare”), as well as the Company’s new name, reflects a strategic decision by the Company to operate in the blockchain and digital currency related business sector.
+--1167419_2018.htm_section_1A_line_230: No exact industry category found
+
+=== INDUSTRY Results for file 1746129_2018.htm===
+Number of processed chunks: 29
+--1746129_2018.htm_section_1_line_25: banking and financial services industry
+--1746129_2018.htm_section_1_line_129: financial industry
+--1746129_2018.htm_section_1A_line_58: financial services and banking industry; provider of relationship-based commercial banking services
+--1746129_2018.htm_section_1A_line_27: No exact industry category found
+--1746129_2018.htm_section_1A_line_87: financial services industry
+--1746129_2018.htm_section_1A_line_106: No exact industry category found
+--1746129_2018.htm_section_7_line_166: No exact industry category found
+--1746129_2018.htm_section_1A_line_168: financial services industry
+--1746129_2018.htm_section_1A_line_23: No exact industry category found
+--1746129_2018.htm_section_1A_line_29: No exact industry category found
+--1746129_2018.htm_section_1A_line_30: hospitality industry
+--1746129_2018.htm_section_1A_line_75: banking industry
+--1746129_2018.htm_section_1A_line_69: financial services industry; banking industry
+--1746129_2018.htm_section_1A_line_119: financial industry
+--1746129_2018.htm_section_1A_line_118: financial services industry
+--1746129_2018.htm_section_1_line_17: No exact industry category found
+--1746129_2018.htm_section_1_line_26: banking and financial services industry
+--1746129_2018.htm_section_1A_line_57: No exact industry category found
+--1746129_2018.htm_section_1A_line_102: banking industry
+--1746129_2018.htm_section_1A_line_176: No exact industry category found
+--1746129_2018.htm_section_7_line_175: No exact industry category found
+--1746129_2018.htm_section_1A_line_173: financial services industry
+--1746129_2018.htm_section_1_line_126: banking industry
+--1746129_2018.htm_section_1A_line_21: No exact industry category found
+--1746129_2018.htm_section_1A_line_28: energy industry
+--1746129_2018.htm_section_1A_line_115: banking industry
+--1746129_2018.htm_section_8_line_91: No exact industry category found
+--1746129_2018.htm_section_6_line_6: banking industry
+--1746129_2018.htm_section_1A_line_169: banking industry
+
+=== INDUSTRY Results for file 886128_2018.htm===
+Number of processed chunks: 15
+--886128_2018.htm_section_1A_line_73: No exact industry category found
+--886128_2018.htm_section_1A_line_75: No exact industry category found
+--886128_2018.htm_section_1A_line_71: No exact industry category found
+--886128_2018.htm_section_5_line_8: Standard Industry Classification Group Code 3690
+--886128_2018.htm_section_8_line_86: Advanced Technologies
+--886128_2018.htm_section_1A_line_45: No exact industry category found
+--886128_2018.htm_section_7_line_78: No exact industry category found
+--886128_2018.htm_section_7_line_245: The Company has numerous different revenue sources including the sale and installation of fuel cell power plants, site engineering and construction services, sale of modules and spare parts, extended warranty service agreements, sale of electricity under power purchase agreements, license fees and royalty income from manufacturing and technology transfer agreements and customer-sponsored Advanced Technologies projects.
+--886128_2018.htm_section_1A_line_99: No exact industry category found
+--886128_2018.htm_section_1A_line_151: No exact industry category found
+--886128_2018.htm_section_7_line_31: No exact industry category found
+--886128_2018.htm_section_7_line_201: No exact industry category found
+--886128_2018.htm_section_1A_line_95: fuel cell industry
+--886128_2018.htm_section_8_line_120: The Company has numerous different revenue sources including the sale and installation of fuel cell power plants, site engineering and construction services, sale of modules and spare parts, extended warranty service agreements, sale of electricity under power purchase agreements, license fees and royalty income from manufacturing and technology transfer agreements and customer-sponsored Advanced Technologies projects.
+--886128_2018.htm_section_7_line_228: Advanced Technologies
+
+=== INDUSTRY Results for file 1681556_2018.htm===
+Number of processed chunks: 8
+--1681556_2018.htm_section_1_line_16: The PEO and Staffing industry
+--1681556_2018.htm_section_7_line_33: No exact industry category found
+--1681556_2018.htm_section_3_line_5: Merchant Cash Advance industry
+--1681556_2018.htm_section_3_line_6: MCA industry
+--1681556_2018.htm_section_15_line_73: No exact industry category found
+--1681556_2018.htm_section_1_line_6: business categories particularly in the space of IT and Management Consulting; healthcare sector; Enterprise Technology Consulting and Staffing solutions; staffing, HR management, payroll processing and benefit administration services to healthcare and clinical practice centers
+--1681556_2018.htm_section_1_line_9: No exact industry category found
+--1681556_2018.htm_section_15_line_96: No exact industry category found
+
+=== INDUSTRY Results for file 817720_2018.htm===
+Number of processed chunks: 10
+--817720_2018.htm_section_1A_line_10: No exact industry category found
+--817720_2018.htm_section_15_line_175: No exact industry category found
+--817720_2018.htm_section_1A_line_186: No exact industry category found
+--817720_2018.htm_section_1A_line_231: No exact industry category found
+--817720_2018.htm_section_1_line_341: No exact industry category found
+--817720_2018.htm_section_5_line_14: The text references the 'Philadelphia Semiconductor Index' and the 'S&P Semiconductor Select Industry Index' as comparative benchmarks, indicating the company's business focus is related to the semiconductor industry.
+--817720_2018.htm_section_1A_line_215: No exact industry category found
+--817720_2018.htm_section_1_line_336: voice processing silicon and software solutions; voice-enabled devices; consumer and commercial imaging; next-generation audio applications; USB-C codec solutions for wireless audio devices and wearables; automotive touch, display driver and fingerprint solutions; IoT interface products for PC and smartphone docks and wireless adapters; fax, modem and print silicon and software solutions for printers, POS and medical applications
+--817720_2018.htm_section_1A_line_11: consumer electronics industry
+--817720_2018.htm_section_1A_line_235: No exact industry category found
+
+=== INDUSTRY Results for file 1597892_2018.htm===
+Number of processed chunks: 8
+--1597892_2018.htm_section_1_line_23: healthcare industry
+--1597892_2018.htm_section_1_line_27: No exact industry category found
+--1597892_2018.htm_section_1A_line_26: No exact industry category found
+--1597892_2018.htm_section_1A_line_63: No exact industry category found
+--1597892_2018.htm_section_1A_line_62: No exact industry category found
+--1597892_2018.htm_section_10_line_7: China medical services industry
+--1597892_2018.htm_section_1A_line_10: The hospital industry
+--1597892_2018.htm_section_7_line_45: healthcare industry
 
 ============================================================FINAL VALUES:============================================================
 === REVENUE Results ===
 
---File: 1667313_2018.htm gets total revenue in year 2018: 10.8 million
---File: 1328143_2018.htm gets total revenue in year 2018: 
---File: 10795_2018.htm gets total revenue in year 2018: 15.983 billion
---File: 1558465_2018.htm gets total revenue in year 2018: 9,026,962
---File: 1167419_2018.htm gets total revenue in year 2018: 7,846,000
+--File: 1667313_2018.htm has REVENUE in year 2018: 10.8 million
+--File: 1328143_2018.htm has REVENUE in year 2018: 
+--File: 10795_2018.htm has REVENUE in year 2018: 15.983 billion
+--File: 1558465_2018.htm has REVENUE in year 2018: 9,026,962
+--File: 1167419_2018.htm has REVENUE in year 2018: 
+--File: 1746129_2018.htm has REVENUE in year 2018: 
+--File: 886128_2018.htm has REVENUE in year 2018: $2.1 million
+--File: 1681556_2018.htm has REVENUE in year 2018: 0
+--File: 817720_2018.htm has REVENUE in year 2018: 1,630.3 million
+--File: 1597892_2018.htm has REVENUE in year 2018: 28402759
 === LOSS Results ===
 
---File: 1667313_2018.htm gets total revenue in year 2018: 1.6 million
---File: 1328143_2018.htm gets total revenue in year 2018: 131.0 million
---File: 10795_2018.htm gets total revenue in year 2018: 
---File: 1558465_2018.htm gets total revenue in year 2018: 
---File: 1167419_2018.htm gets total revenue in year 2018: 60,213,000
+--File: 1667313_2018.htm has LOSS in year 2018: 1.3 million
+--File: 1328143_2018.htm has LOSS in year 2018: 131.0 million
+--File: 10795_2018.htm has LOSS in year 2018: -107 million
+--File: 1558465_2018.htm has LOSS in year 2018: 
+--File: 1167419_2018.htm has LOSS in year 2018: 60,309,000
+--File: 1746129_2018.htm has LOSS in year 2018: 
+--File: 886128_2018.htm has LOSS in year 2018: 2.0 million
+--File: 1681556_2018.htm has LOSS in year 2018: $5,105,047
+--File: 817720_2018.htm has LOSS in year 2018: 124.1 million
+--File: 1597892_2018.htm has LOSS in year 2018: 
+=== INDUSTRY Results ===
+
+--File: 1667313_2018.htm has INDUSTRY in year 2018: internet and smartphone industries
+--File: 1328143_2018.htm has INDUSTRY in year 2018: U.S. pharmaceutical industry
+--File: 10795_2018.htm has INDUSTRY in year 2018: healthcare industry
+--File: 1558465_2018.htm has INDUSTRY in year 2018: oil and gas industry
+--File: 1167419_2018.htm has INDUSTRY in year 2018: blockchain and digital currency related business sector
+--File: 1746129_2018.htm has INDUSTRY in year 2018: banking industry
+--File: 886128_2018.htm has INDUSTRY in year 2018: Advanced Technologies
+--File: 1681556_2018.htm has INDUSTRY in year 2018: IT and Management Consulting; healthcare sector; Enterprise Technology Consulting and Staffing solutions
+--File: 817720_2018.htm has INDUSTRY in year 2018: consumer electronics industry
+--File: 1597892_2018.htm has INDUSTRY in year 2018: healthcare industry

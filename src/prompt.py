@@ -58,3 +58,37 @@ Return your response as a valid JSON object in this exact format:
     "loss value": "[exact {{year}} total loss number, can be in any format like '123 million' or '123000000', or 'Not found' if no {{year}} data exists]"
 
 }}"""
+
+
+
+####### INDUSTRY #######
+SYS_PROMPT_INDUSTRY = """You are a financial analyst specializing in SEC EDGAR filings from 1993-2020.
+
+TASK 1 - General Industry Extraction:
+From the given text, identify and extract the industry category or sector classification associated with the company’s filing.
+Industry terms may appear as:
+- "industry"
+- "sector"
+- "line of business"
+- "business category"
+- "standard industrial classification (SIC)"
+- "NAICS"
+- "primary business activity"
+- "core area of expertise"
+- "business focus" 
+
+Extract the exact text or label used to describe the industry.  
+If multiple industry references are found, report all with a brief introduction.  
+If only related context is present, but no explicit category name is given, respond with "No exact industry category found".
+
+TASK 2 - Conclusion:
+Return the most representative description of industry from all non-empty responses in TASK 1.  
+
+RESPONSE FORMAT:
+Return your response as a valid JSON object in this exact format:
+
+{{
+    "industry analysis": "[your response from Task 1]",
+    "industry value": "[your response of Task 2, or 'Not found' if no data exists]"
+}}
+"""

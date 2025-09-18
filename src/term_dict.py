@@ -1,7 +1,8 @@
 # similarity threshold
 similarity_threshold = {
     "REVENUE": 0.5,
-    "LOSS": 0.4
+    "LOSS": 0.4,
+    "INDUSTRY":0.2
 }
 
 
@@ -30,8 +31,21 @@ LOSS_KEYWORDS = [
     "losses"
 ]
 
+# Industry-related keywords
+INDUSTRY_KEYWORDS = [
+    "industry",
+    "sector",
+    "line business",
+    "business category",
+    "SIC",
+    "NAICS",
+    "business activity"
+]
+
+
 # Main dictionary for term matching
 TERM_DICT = {
     "REVENUE": REVENUE_KEYWORDS,
     "LOSS": LOSS_KEYWORDS,
+    "INDUSTRY": INDUSTRY_KEYWORDS
 }

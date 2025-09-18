@@ -151,7 +151,7 @@ class EdgarRAGPipeline:
         token_filtered = {}
         for key, text in chunks.items():
             tokens = text.split()
-            if len(tokens) > 0:
+            if len(tokens) > 5:
                 token_filtered[key] = text
         self.logger.info(f"Chunks filtered by token>3 : {len(token_filtered)}")
         if not token_filtered:
@@ -184,6 +184,7 @@ class EdgarRAGPipeline:
                 if keyword in feature_names:
                     idx = np.where(feature_names == keyword)[0][0]
                     feature_indices.append(idx)
+                    # print("PICKED KEYWORDS: "+keyword)
     
             if not feature_indices:
                 self.logger.info("Feature related terms not found in TFIDF feature")
@@ -201,7 +202,10 @@ class EdgarRAGPipeline:
             # filter by score>0 
             selected_chunks = {}
             for i, (key, text) in enumerate(zip(chunk_keys, chunk_texts)):
+                chunk_preview = text[:100] + "..." if len(text) > 100 else text
+                # print("TO PICK: "+chunk_preview)
                 if feature_scores[i] > 0:
+                    # print("SELECTED")
                     selected_chunks[key] = text
             self.logger.info(f"Chunks filtered by TFIDF: {len(selected_chunks)}")
             results[feature] = selected_chunks
@@ -242,7 +246,9 @@ class EdgarRAGPipeline:
                 # for every chunk, check the score for every query
                 chunk_similarities = all_similarities[:, chunk_idx]
                 max_score = np.max(chunk_similarities)
-                chunk_preview = chunk_texts[chunk_idx][:100] + "..." if len(chunk_texts[chunk_idx]) > 100 else chunk_texts[chunk_idx]
+                # chunk_preview = chunk_texts[chunk_idx][:100] + "..." if len(chunk_texts[chunk_idx]) > 100 else chunk_texts[chunk_idx]
+                # self.logger.info(f"     Similarity score: {max_score:.4f}")
+                # self.logger.info(f"     Preview: {chunk_preview}")
                 if max_score > term_dict.similarity_threshold[feature]:
                     chunk_key = chunk_keys[chunk_idx]
                     selected_chunks[chunk_key] = chunk_texts[chunk_idx]
@@ -275,10 +281,13 @@ class EdgarRAGPipeline:
             if feature_upper == "LOSS":
                 sys_prompt = prompt.SYS_PROMPT_LOSS.format(year=year)
                 user_prompt = f"Extract total loss information from this SEC filing text:\n\n{content[:4000]}"
+            if feature_upper == "INDUSTRY":
+                sys_prompt = prompt.SYS_PROMPT_INDUSTRY.format(year=year)
+                user_prompt = f"Extract industry information from this SEC filing text:\n\n{content[:4000]}"
             
             try:
                 response = client.chat.completions.create(
-                    model="gpt-5",
+                    model="gpt-4.1-mini",
                     messages=[
                         {
                             "role": "system",
@@ -290,7 +299,8 @@ class EdgarRAGPipeline:
                         }
                     ],
                     max_completion_tokens=3000,
-                    reasoning_effort="medium"
+                    temperature = 0.1
+                    # reasoning_effort="medium"
                 )
                 
                 full_response = response.choices[0].message.content.strip()
@@ -402,7 +412,7 @@ class EdgarRAGPipeline:
         has_any_chunks = any(chunks for chunks in semantically_filtered.values())
         if not has_any_chunks:
             self.logger.info(f"  No chunks found in {filename} after step 3")
-            return {feature: {filename: "No chunks found"} for feature in self.key_options}
+            return {feature: {filename: "No chunks found"} for feature in self.key_options}, {}
         for feature, chunks in semantically_filtered.items():
             self.logger.info(f"Found {len(chunks)} chunks for {feature} after step 3")
 

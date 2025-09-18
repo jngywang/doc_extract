@@ -19,8 +19,9 @@ def main():
 
     # key_options: ["REVENUE", "LOSS", "INDUSTRY"]
     key_options = ["REVENUE", "LOSS"]
+    key_options = ["REVENUE", "LOSS", "INDUSTRY"]
     pipeline = EdgarRAGPipeline(API_KEY, year, key_options)
-    results, values = pipeline.run_pipeline(n_files = 5)
+    results, values = pipeline.run_pipeline(n_files = 10)
 
     with open("../feature_extraction_results", "w") as f:
         f.write("\n" + "="*60)
@@ -45,7 +46,7 @@ def main():
             f.write(f"\n=== {feature} Results ===\n")
             for filename, file_results in values.items():
                 feature_value = file_results.get(feature, "")
-                f.write(f"\n--File: {filename} gets total revenue in year {year}: {feature_value}")
+                f.write(f"\n--File: {filename} has {feature} in year {year}: {feature_value}")
 
 if __name__ == "__main__":
     main()
