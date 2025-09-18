@@ -19,7 +19,8 @@ def main():
     year = str(args.year)
 
     # key_options: ["REVENUE", "LOSS", "INDUSTRY"]
-    key_options = ["REVENUE", "LOSS"]
+    key_options = ["LOSS"]
+    # key_options = ["REVENUE", "LOSS"]
     key_options = ["REVENUE", "LOSS", "INDUSTRY"]
     pipeline = EdgarRAGPipeline(API_KEY, year, key_options)
     results, values = pipeline.run_pipeline(n_files = 10)
@@ -51,7 +52,6 @@ def main():
 
     with open("../feature_extraction_results.csv", "w", newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        
         writer.writerow(['Feature', 'Filename', 'Year', 'Feature_Value'])
         
         for feature in key_options:

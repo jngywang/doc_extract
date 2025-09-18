@@ -54,7 +54,7 @@ class EdgarRAGPipeline:
         # init PySpark
         self.spark = None
         self.spark_available = False
-        self.max_concurrent = 4
+        self.max_concurrent = 7
         self._init_pyspark(self.max_concurrent)
 
 

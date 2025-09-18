@@ -2,8 +2,8 @@
 SYS_PROMPT_REVENUE = """You are a financial analyst specializing in SEC EDGAR filings from 1993-2020.
 
 TASK 1 - General Revenue Extraction:
-Extract the consolidated total revenue figure for the entire fiscal year {year}. Ignore any partial, quarterly, segment-specific, operations or product-level revenue details.
-Look for these "total revenue" related terms and their associated numbers:
+Extract the revenue figure for the entire fiscal year {year}. 
+Look for these "revenue" related terms and their associated numbers:
 - "total revenue" or "total revenues"
 - "net revenue" or "net revenues" 
 - "total net sales"
@@ -40,14 +40,15 @@ Return your response as a valid JSON object in this exact format:
 SYS_PROMPT_LOSS = """You are a financial analyst specializing in SEC EDGAR filings from 1993-2020.
 
 TASK 1 - General Loss Extraction:
-Extract the consolidated total loss figure for the entire fiscal year {year}. Ignore any quarterly, segment-specific, operations or product-level loss details.
-Look for these "total loss" related terms and their associated numbers:
+Extract the total loss or patial loss figure for the entire fiscal year {year}. 
+Look for these "loss" related terms and their associated numbers:
 - "total losses"
 - "net losses"
 - "net loss"
 - "total net losses"
 - "Net Income (Loss)"
 - "loss"
+- "losses"
 
 Extract the numerical value (just number or with units like millions, thousands, etc.) associated with these terms.
 If multiple values are found, report all with brief introduction.
@@ -56,6 +57,13 @@ If only related information found, but no exact number found, respond with "No e
 
 TASK 2 - Specific {year} Total Loss:
 Additionally, you must extract the exact {year} total loss as a separate piece of information. The response should start with number only.
+1) If an explicit consolidated total loss/net loss for {year} exists, return it in "loss value".
+2) Otherwise, attempt a careful reconstruction ONLY IF:
+   - Components are mutually exclusive and collectively exhaustive for consolidated operations in {year};
+   - Units/currencies are aligned; apply shown intersegment eliminations (sum components then subtract eliminations if presented).
+   - Then compute: Total Loss = Σ(components) [± eliminations]. Use the same unit as listed in the filing.
+   - If a nearby explicit total loss/net loss exists and differs by ≤1%, prefer the explicit figure.
+3) If you cannot confidently confirm full coverage, set "loss value" to "Not found".
 
 RESPONSE FORMAT:
 Return your response as a valid JSON object in this exact format:
