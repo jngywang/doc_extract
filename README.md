@@ -1,45 +1,74 @@
 # doc_extract
 
-`doc_extract` is an EDGAR document-extraction component of a broader research project: **Developing an AI-agent-based system to construct large-scale multimodal training datasets for public-safety applications**. Development of the broader project began in **September 2025**.
+`doc_extract` is part of the project **Developing an AI-agent-based system to construct large-scale multimodal training datasets for public-safety applications**, initiated in September 2025.
 
-The long-term project aims to build scalable AI agents that reconstruct natural and environmental disasters, transportation and infrastructure incidents, and human-caused or technological emergencies from decades of publicly available records. It will connect authoritative event records with relevant text, imagery, video, structured data, and time-series observations using transformer encoders, geospatial-temporal matching, cross-modal similarity analysis, and source-quality checks.
+The long-term project aims to build scalable AI agents that reconstruct public-safety events in multimodality. The agents will identify and reconstruct events from decades of publicly available records. The resulting event-centered datasets are intended to support training and decision-support research on public-safety events and responding strategies.
 
-Within that larger effort, this repository provides an early, text-focused extraction workflow. It retrieves relevant passages from SEC EDGAR filing data and uses an LLM to convert selected passages into structured feature values. The current implementation focuses on the financial-document domain and serves as a reusable pattern for evidence retrieval, filtering, provenance-aware extraction, and structured dataset construction.
+This repository focuses on one of the central technical challenges required by that larger system:
 
-> **Current scope:** This repository extracts information from SEC EDGAR filings; it does not yet perform disaster reconstruction or multimodal public-safety event matching.
+> **How can an AI agent extract the correct structured fact from a large text collection with high precision, while preserving the evidence needed to verify the result?**
 
-## What it does
+The approach is designed for precise extraction from **any large-scale text corpus**. The current implementation provides a prototype architecture for locating relevant evidence, eliminating plausible but incorrect alternatives, producing structured outputs, and retaining document- and passage-level traceability.
 
-The pipeline processes sectioned EDGAR documents for a selected year and extracts the following features:
+## Technical objective
 
-- **REVENUE** — annual total revenue / net sales information;
-- **LOSS** — annual total or net loss information;
-- **INDUSTRY** — an industry, sector, SIC/NAICS, or business-activity description.
+A target value may appear alongside many misleading alternatives. Long documents and document collections often contain:
 
-For each document, the workflow:
+- values associated with different dates, entities, locations, versions, or reporting periods;
+- partial values that should not be treated as totals or event-level facts;
+- repeated statements, summaries, tables, footnotes, and narrative references;
+- conflicting terminology, formats, units, or levels of aggregation;
+- semantically related passages that are not valid evidence for the requested field; and
+- statements that mention a target concept but do not support a precise extractable value.
 
-1. Loads JSON EDGAR records listed in the `data` manifest.
-2. Selects records associated with the requested year (currently **1993–2020**).
-3. Splits populated `section_*` fields into line-level chunks.
-4. Removes very short chunks and applies TF-IDF keyword filtering.
-5. Uses `all-MiniLM-L6-v2` sentence embeddings and cosine-similarity thresholds to retain semantically relevant chunks.
-6. Uses the OpenAI API in parallel PySpark partitions to extract a JSON analysis and a feature value from the retained evidence.
-7. Writes detailed results to `feature_extraction_results` and a tabular summary to `feature_extraction_results.csv`.
+For public-safety event reconstruction, similar problems arise when extracting casualties, damage estimates, infrastructure impacts, response resources, costs, service disruptions, environmental measures, or recovery indicators from large and heterogeneous document collections.
 
-## Repository layout
+The goal is therefore not merely to retrieve text that appears relevant. The goal is to identify the **right evidence**, determine whether it satisfies the extraction criteria, return a normalized structured value only when warranted, and make the result auditable against its supporting passages.
 
-```text
-.
-├── data                           # Manifest of JSON data paths (one path per line)
-├── feature_extraction_results     # Example detailed extraction output
-├── feature_extraction_results.csv # Example structured extraction output
-└── src/
-    ├── edgar_rag_pipeline.py      # Retrieval, filtering, embedding, and LLM pipeline
-    ├── feature_extraction.py      # Command-line entry point and result writers
-    ├── prompt.py                  # Feature-specific LLM prompts and JSON schemas
-    └── term_dict.py               # Keywords and semantic-similarity thresholds
-```
+## Method
 
+The pipeline uses staged retrieval and constrained extraction rather than relying on a model to interpret an entire document collection at once.
+
+1. **Document segmentation**  
+   Large documents are divided into traceable evidence candidates.
+
+2. **Lexical candidate filtering**  
+   Short or clearly irrelevant passages are removed. Target-specific terms identify an initial set of potentially relevant candidates.
+
+3. **Semantic relevance filtering**  
+   A sentence-transformer encoder generates embeddings for target concepts and candidate passages. Cosine similarity is used to retain passages that are semantically related to the requested field, including relevant language that may not exactly match a keyword.
+
+4. **Target-specific thresholds**  
+   Similarity thresholds can be configured separately for different extraction targets, allowing the retrieval stage to balance recall and precision according to the characteristics of each target.
+
+5. **Constrained LLM extraction**  
+   Only the reduced evidence set is submitted to an LLM. Target-specific prompts instruct the model to:
+   - extract the requested information;
+   - distinguish complete values from partial, ambiguous, or mismatched values;
+   - return `Not found` when the available evidence is insufficient; and
+   - produce structured JSON with both an analysis and a candidate value.
+
+6. **Parallel processing**  
+   PySpark distributes extraction work across partitions so that large candidate sets can be processed concurrently.
+
+7. **Structured outputs and logs**  
+   The pipeline writes detailed extraction analyses, document-level structured values, and runtime logs to support review, error analysis, and future evaluation.
+
+## Current capabilities
+
+The current prototype implements:
+
+- configurable target-specific keyword dictionaries;
+- TF-IDF-based lexical candidate selection;
+- semantic filtering with the `all-MiniLM-L6-v2` sentence-transformer model;
+- cosine-similarity thresholding;
+- target-specific prompts with required JSON response schemas;
+- OpenAI API-based extraction;
+- PySpark-based parallel execution;
+- detailed extraction output and CSV summaries; and
+- timestamped runtime logging.
+
+The included feature configurations are examples of how a target can be represented through keywords, semantic thresholds, and extraction instructions. The same architecture can be extended to other text-based facts by defining new targets and evaluation criteria.
 ## Requirements
 
 - Python 3.9+ (recommended)
@@ -74,45 +103,62 @@ Set the API key in the environment variable used by the current code:
 export OPEN_API_KEY="your-openai-api-key"
 ```
 
-> The variable name is intentionally shown as `OPEN_API_KEY` because that is the name currently read by `src/feature_extraction.py`.
+Configure target-specific keywords and semantic thresholds in `src/term_dict.py`. Configure extraction rules and JSON response schemas in `src/prompt.py`.
 
-Feature keywords and semantic thresholds are defined in `src/term_dict.py`. The extraction prompts and expected JSON response formats are defined in `src/prompt.py`.
+To adapt the pipeline to a new extraction target:
 
-## Run the pipeline
+1. define a target name;
+2. add a domain-appropriate keyword dictionary;
+3. set and evaluate a semantic similarity threshold;
+4. create a constrained prompt that specifies what counts as valid evidence and what should be rejected; and
+5. validate extraction quality against source passages and task-specific ground truth.
 
-Run the command from the `src` directory so the repository's relative paths resolve as expected:
+## Run
+
+Run from the `src` directory so the existing relative paths resolve correctly:
 
 ```bash
 cd src
 python feature_extraction.py 2018
 ```
 
-Replace `2018` with any year from **1993** through **2020**. The entry point currently processes up to 10 documents and enables all three supported features:
+The current command-line interface accepts a year argument and processes up to 10 documents per run.
 
-```python
-key_options = ["REVENUE", "LOSS", "INDUSTRY"]
-```
+## Outputs
 
-Results are written to the repository root:
+The pipeline produces:
 
-- `feature_extraction_results` contains chunk-level analyses;
-- `feature_extraction_results.csv` contains `Feature`, `Filename`, `Year`, and `Feature_Value` columns;
-- timestamped logs are created under `src/logs/`.
+- `feature_extraction_results`  
+  Detailed chunk-level extraction analyses.
 
-## Method and broader research relevance
+- `feature_extraction_results.csv`  
+  A structured summary containing:
 
-The broader public-safety dataset initiative is intended to create event-centered, multimodal records that capture:
+  ```text
+  Feature, Filename, Year, Feature_Value
+  ```
 
-- conditions surrounding an incident;
-- response measures and deployed resources; and
-- measurable outcomes, including casualties, property and infrastructure damage, response expenditures, service disruptions, environmental impacts, and recovery time.
+- `src/logs/edgar_pipeline_<timestamp>.log`  
+  Runtime logs, including retrieval and filtering information.
 
-This repository contributes a narrow but important capability: turning large collections of public documents into screened, structured, model-ready evidence. Its retrieval-and-extraction design can be adapted to authoritative reports, maintenance and inspection records, transportation and environmental observations, news archives, and other properly accessible public sources used by future public-safety data agents.
+## Research direction
+
+The main research question is how to make automated extraction **precise, scalable, and auditable** when the correct evidence is sparse and the surrounding text contains many plausible but incorrect alternatives.
+
+Planned directions include:
+
+- extraction targets beyond the current examples;
+- improved normalization of units, dates, entities, locations, and provenance;
+- confidence scoring and cross-passage consistency checks;
+- systematic evaluation of false positives and false negatives;
+- agentic retrieval across multiple authoritative text sources;
+- contradiction detection and evidence-ranking methods; and
+- integration with image, video, geospatial, and time-series evidence for multimodal public-safety event reconstruction.
 
 ## Responsible use
 
-Use only lawfully accessible public data and comply with source terms, licenses, rate limits, privacy obligations, and applicable regulations. LLM-generated values should be treated as candidate extractions and validated against the original filing text before use in analytical, operational, or safety-critical settings.
+Use only lawfully accessible data and comply with applicable licenses, source terms, rate limits, privacy obligations, and regulations. Extracted values are candidate outputs and should be validated against underlying source material before use in high-stakes, operational, or safety-critical contexts.
 
 ## Status
 
-This is an active research prototype. The code and documentation describe the current EDGAR-focused implementation and are expected to evolve as the broader multimodal public-safety dataset system develops.
+Active research prototype. This repository concentrates on high-precision text extraction as a foundational capability for the broader multimodal public-safety dataset construction system.
