@@ -47,6 +47,7 @@ class EdgarRAGPipeline:
         self.year = year
         self.key_options = key_options
         self.data_path = data_path
+        self.file_timings = {}
 
         # init Sentence Transformer
         self.logger.info("loading Sentence Transformer...")
@@ -62,7 +63,13 @@ class EdgarRAGPipeline:
     def _init_pyspark(self, max_concurrent):
         try:
             self.logger.info("Init PySpark...")
-            
+
+            # export PYSPARK_PYTHON=/Users/jingyawang/anaconda3/envs/hf-edgar/bin/python
+            # export PYSPARK_DRIVER_PYTHON=/Users/jingyawang/anaconda3/envs/hf-edgar/bin/python
+
+            os.environ["PYSPARK_PYTHON"] = sys.executable
+            os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
             self.spark = SparkSession.builder \
                 .appName("EdgarRAGPipeline") \
                 .master("local[*]") \
@@ -418,25 +425,58 @@ class EdgarRAGPipeline:
 
         return results, values
     
-    def run_pipeline(self, n_files = 5):
+    def run_pipeline(self, n_files = 5, gt_lookup = None):
+        """gt_lookup: optional {filename -> set(features)} of features that have
+        a ground-truth value. Features not listed for a file are skipped (no
+        extraction) and recorded as empty / 'not found'."""
         self.logger.info("Starting EDGAR RAG Pipeline...")
-        
+
         if not self.load_edgar_data():
             return {}
         test_data_year = self.get_test_data_year()
         if not test_data_year:
             self.logger.info("No data found in {self.year}")
             return {}
-        
+
         all_results = {}
         all_values = {}
-        
+        all_features = list(self.key_options)
+
         for i, document in enumerate(test_data_year[:n_files]):
             self.logger.info(f"\n=== Reading files {i+1}/{min(n_files, len(test_data_year))} ===")
-            
-            results, values = self.process_document(document)
+
             filename = document.get('filename', f'doc_{i}')
+
+            if gt_lookup is None:
+                wanted = list(all_features)
+            else:
+                wanted = [f for f in all_features if f in gt_lookup.get(filename, set())]
+
+            file_start = time.time()
+            if not wanted:
+                self.logger.info(f"  Skipping {filename}: no ground-truth data for any feature")
+                results = {f: {} for f in all_features}
+                values = {f: "" for f in all_features}
+            else:
+                if wanted != all_features:
+                    self.logger.info(f"  {filename}: only extracting {wanted} (ground truth present)")
+                self.key_options = wanted
+                try:
+                    out = self.process_document(document)
+                finally:
+                    self.key_options = all_features
+                if isinstance(out, tuple) and len(out) == 2:
+                    results, values = out
+                else:
+                    results, values = (out or {}), {}
+                values = dict(values or {})
+                for f in all_features:
+                    values.setdefault(f, "")
+            elapsed = time.time() - file_start
+            self.file_timings[filename] = elapsed
+            self.logger.info(f"File {filename} took {elapsed:.2f} seconds")
+
             all_results[filename] = results
             all_values[filename] = values
-   
+
         return all_results, all_values
